@@ -9,6 +9,7 @@ const baseUrl = `${apiHost}${apiBase}`;
 
 type Queries = {
   getTransactions: () => Promise<Transaction[]>;
+  createTransaction: (t: Transaction) => Promise<void>;
 };
 
 const QueriesDev: Queries = {
@@ -23,12 +24,26 @@ const QueriesDev: Queries = {
 
     return Promise.resolve(tx);
   },
+  createTransaction: () => {
+    return Promise.resolve();
+  },
 };
 
 const QueriesProduction: Queries = {
   getTransactions: () => {
     const url = `${baseUrl}/`;
     return fetch(url).then((response) => response.json());
+  },
+  createTransaction: (t) => {
+    const url = `${baseUrl}`;
+    const options = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(t),
+    };
+    return fetch(url, options).then(() => Promise.resolve());
   },
 };
 

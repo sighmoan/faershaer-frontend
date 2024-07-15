@@ -1,5 +1,5 @@
 export type Transaction = {
-  txId: string;
+  txId?: string;
   payer: string;
   expense: string;
   sum: number;
