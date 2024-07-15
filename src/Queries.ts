@@ -1,7 +1,10 @@
 import { Transaction } from "./Types";
 
 const apiHost = import.meta.env.VITE_API_HOST;
-const apiBase = import.meta.env.VITE_API_BASE;
+if (!apiHost) {
+  throw new Error("API host may not be unset.");
+}
+const apiBase = import.meta.env.VITE_API_BASE ?? "";
 const baseUrl = `${apiHost}${apiBase}`;
 
 type Queries = {
