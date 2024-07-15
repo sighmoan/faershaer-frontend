@@ -12,22 +12,36 @@ type Queries = {
   createTransaction: (t: Transaction) => Promise<void>;
 };
 
-const QueriesDev: Queries = {
-  getTransactions: () => {
-    const tx = [
-      { txId: "1", payer: "John", expense: "Wine", sum: 500.0 },
-      { txId: "2", payer: "Alice", expense: "Cherries", sum: 150.75 },
-      { txId: "3", payer: "Bob", expense: "Blanket", sum: 120.0 },
-      { txId: "4", payer: "Sarah", expense: "Boat rental", sum: 200.0 },
-      { txId: "5", payer: "Sarah", expense: "Gas", sum: 75.0 },
-    ];
+/****
+ *
+ * DEVELOPMENT
+ *
+ */
 
-    return Promise.resolve(tx);
-  },
-  createTransaction: () => {
+const txData: Transaction[] = [
+  { txId: "1", payer: "John", expense: "Wine", sum: 500.0 },
+  { txId: "2", payer: "Alice", expense: "Cherries", sum: 150.75 },
+  { txId: "3", payer: "Bob", expense: "Blanket", sum: 120.0 },
+  { txId: "4", payer: "Sarah", expense: "Boat rental", sum: 200.0 },
+  { txId: "5", payer: "Sarah", expense: "Gas", sum: 75.0 },
+];
+let maxTxId = 5;
+
+const QueriesDev: Queries = {
+  getTransactions: () => Promise.resolve(JSON.parse(JSON.stringify(txData))),
+  createTransaction: (t: Transaction) => {
+    t.txId = String(++maxTxId);
+    txData.push(t);
     return Promise.resolve();
   },
 };
+
+/*****
+ *
+ * PRODUCTION
+ *
+ *
+ */
 
 const QueriesProduction: Queries = {
   getTransactions: () => {
