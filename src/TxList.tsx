@@ -3,23 +3,27 @@ import { Transaction } from "./Types.ts";
 
 const TxList = () => {
   const tx: Transaction[] = [
-    { payer: "John", expense: "Wine", sum: 500.0 },
-    { payer: "Alice", expense: "Cherries", sum: 150.75 },
-    { payer: "Bob", expense: "Blanket", sum: 120.0 },
-    { payer: "Sarah", expense: "Boat rental", sum: 200.0 },
-    { payer: "Sarah", expense: "Gas", sum: 75.0 },
+    { txId: "1", payer: "John", expense: "Wine", sum: 500.0 },
+    { txId: "2", payer: "Alice", expense: "Cherries", sum: 150.75 },
+    { txId: "3", payer: "Bob", expense: "Blanket", sum: 120.0 },
+    { txId: "4", payer: "Sarah", expense: "Boat rental", sum: 200.0 },
+    { txId: "5", payer: "Sarah", expense: "Gas", sum: 75.0 },
   ];
 
   return (
     <table>
       <thead>
-        <th>Payer</th>
-        <th>Expense</th>
-        <th>Sum</th>
+        <tr>
+          <th>Payer</th>
+          <th>Expense</th>
+          <th>Sum</th>
+        </tr>
       </thead>
-      {tx.map((t) => (
-        <TxRow {...t}></TxRow>
-      ))}
+      <tbody>
+        {tx.map((t) => (
+          <TxRow key={t.txId} {...t}></TxRow>
+        ))}
+      </tbody>
     </table>
   );
 };
