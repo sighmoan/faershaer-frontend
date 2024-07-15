@@ -1,5 +1,11 @@
+import TxList from "./TxList";
+
 function App() {
-  return <></>;
+  return (
+    <>
+      <TxList></TxList>
+    </>
+  );
 }
 
 export default App;
