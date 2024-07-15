@@ -28,5 +28,4 @@ let QueriesActual = QueriesDev;
 if (import.meta.env.PROD) {
   QueriesActual = QueriesProduction;
 }
-
-export default QueriesActual;
+export { QueriesActual };

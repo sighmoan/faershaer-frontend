@@ -1,14 +1,18 @@
+import { useQuery } from "@tanstack/react-query";
 import TxRow from "./TxRow.tsx";
 import { Transaction } from "./Types.ts";
+import { QueriesActual as Queries } from "./Queries.ts";
 
 const TxList = () => {
-  const tx: Transaction[] = [
-    { txId: "1", payer: "John", expense: "Wine", sum: 500.0 },
-    { txId: "2", payer: "Alice", expense: "Cherries", sum: 150.75 },
-    { txId: "3", payer: "Bob", expense: "Blanket", sum: 120.0 },
-    { txId: "4", payer: "Sarah", expense: "Boat rental", sum: 200.0 },
-    { txId: "5", payer: "Sarah", expense: "Gas", sum: 75.0 },
-  ];
+  const { isPending, error, data } = useQuery({
+    queryKey: ["txData"],
+    queryFn: Queries.getTransactions,
+  });
+
+  if (isPending) return "Loading . . .";
+  if (error) return "Error!";
+
+  const tx: Transaction[] = data!;
 
   return (
     <table>
