@@ -9,13 +9,14 @@ const AddTxForm = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (!e.target) return;
     const tx: Transaction = {
       payer: e.currentTarget.payer.value,
       expense: e.currentTarget.expense.value,
       sum: e.currentTarget.sum.value,
     };
-    console.log(tx);
-    addTx.mutate(tx);
+    const currentForm = e.currentTarget;
+    addTx.mutateAsync(tx).then(() => currentForm.reset());
   };
 
   return (
