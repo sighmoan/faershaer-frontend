@@ -1,5 +1,9 @@
 import { Transaction } from "./Types";
 
+const apiHost = import.meta.env.VITE_API_HOST;
+const apiBase = import.meta.env.VITE_API_BASE;
+const baseUrl = `${apiHost}${apiBase}`;
+
 type Queries = {
   getTransactions: () => Promise<Transaction[]>;
 };
@@ -20,12 +24,13 @@ const QueriesDev: Queries = {
 
 const QueriesProduction: Queries = {
   getTransactions: () => {
-    return Promise.reject();
+    const url = `${baseUrl}/`;
+    return fetch(url).then((response) => response.json());
   },
 };
 
 let QueriesActual = QueriesDev;
-if (import.meta.env.PROD) {
+if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
   QueriesActual = QueriesProduction;
 }
 export { QueriesActual };
