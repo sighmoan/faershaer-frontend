@@ -57,7 +57,13 @@ const QueriesDev: Queries = {
 const QueriesProduction: Queries = {
   getTransactions: () => {
     const url = `${baseUrl}/`;
-    return fetch(url).then((response) => response.json());
+    return fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        return data.map((t: Transaction & { id: string }) => {
+          return { ...t, txId: t.id };
+        });
+      });
   },
   createTransaction: (t) => {
     const url = `${baseUrl}`;
@@ -70,7 +76,13 @@ const QueriesProduction: Queries = {
     };
     return fetch(url, options).then(() => Promise.resolve());
   },
-  deleteTransaction: () => Promise.reject(),
+  deleteTransaction: (txId: string) => {
+    const url = `${baseUrl}/${txId}`;
+    const options = {
+      method: "DELETE",
+    };
+    return fetch(url, options).then(() => Promise.resolve());
+  },
 };
 
 let QueriesActual = QueriesDev;
