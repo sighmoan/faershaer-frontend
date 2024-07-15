@@ -10,6 +10,7 @@ const baseUrl = `${apiHost}${apiBase}`;
 type Queries = {
   getTransactions: () => Promise<Transaction[]>;
   createTransaction: (t: Transaction) => Promise<void>;
+  deleteTransaction: (id: string) => Promise<void>;
 };
 
 /****
@@ -33,6 +34,16 @@ const QueriesDev: Queries = {
     t.txId = String(++maxTxId);
     txData.push(t);
     return Promise.resolve();
+  },
+  deleteTransaction: (id: string) => {
+    return new Promise((resolve, reject) => {
+      const index: number = txData.findIndex((t) => t.txId == id);
+      if (index >= 0) {
+        txData.splice(index, 1);
+        resolve();
+      }
+      reject();
+    });
   },
 };
 
@@ -59,6 +70,7 @@ const QueriesProduction: Queries = {
     };
     return fetch(url, options).then(() => Promise.resolve());
   },
+  deleteTransaction: () => Promise.reject(),
 };
 
 let QueriesActual = QueriesDev;
