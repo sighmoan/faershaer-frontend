@@ -1,10 +1,15 @@
 import { QueriesActual as Queries } from "./Queries";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Transaction } from "./Types";
 
 const AddTxForm = () => {
+  const queryClient = useQueryClient();
+
   const addTx = useMutation({
     mutationFn: Queries.createTransaction,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["txData"] });
+    },
   });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
