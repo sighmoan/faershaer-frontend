@@ -1,4 +1,4 @@
-import { Transaction } from "./Types";
+import { Transaction, Person } from "./Types";
 
 const apiHost = import.meta.env.VITE_API_HOST;
 if (!apiHost) {
@@ -11,6 +11,7 @@ type Queries = {
   getTransactions: () => Promise<Transaction[]>;
   createTransaction: (t: Transaction) => Promise<void>;
   deleteTransaction: (id: string) => Promise<void>;
+  getPersons: () => Promise<Person[]>;
 };
 
 /****
@@ -18,6 +19,13 @@ type Queries = {
  * DEVELOPMENT
  *
  */
+
+const personData: Person[] = [
+  { id: "1", name: "John", balance: 500.0 },
+  { id: "2", name: "Alice", balance: 150.75 },
+  { id: "3", name: "Bob", balance: 120.0 },
+  { id: "4", name: "Sarah", balance: 275.0 },
+];
 
 const txData: Transaction[] = [
   { txId: "1", payer: "John", expense: "Wine", sum: 500.0 },
@@ -45,6 +53,7 @@ const QueriesDev: Queries = {
       reject();
     });
   },
+  getPersons: () => Promise.resolve(JSON.parse(JSON.stringify(personData))),
 };
 
 /*****
@@ -83,6 +92,7 @@ const QueriesProduction: Queries = {
     };
     return fetch(url, options).then(() => Promise.resolve());
   },
+  getPersons: () => Promise.reject(),
 };
 
 let QueriesActual = QueriesDev;

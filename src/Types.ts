@@ -4,3 +4,9 @@ export type Transaction = {
   expense: string;
   sum: number;
 };
+
+export type Person = {
+  id?: string;
+  name: string;
+  balance: number;
+};
