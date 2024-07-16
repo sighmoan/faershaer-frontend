@@ -28,18 +28,24 @@ const personData: Person[] = [
 ];
 
 const txData: Transaction[] = [
-  { txId: "1", payer: "John", expense: "Wine", sum: 500.0 },
-  { txId: "2", payer: "Alice", expense: "Cherries", sum: 150.75 },
-  { txId: "3", payer: "Bob", expense: "Blanket", sum: 120.0 },
-  { txId: "4", payer: "Sarah", expense: "Boat rental", sum: 200.0 },
-  { txId: "5", payer: "Sarah", expense: "Gas", sum: 75.0 },
+  { txId: "1", payerId: "1", payer: "John", expense: "Wine", sum: 500.0 },
+  { txId: "2", payerId: "2", payer: "Alice", expense: "Cherries", sum: 150.75 },
+  { txId: "3", payerId: "3", payer: "Bob", expense: "Blanket", sum: 120.0 },
+  {
+    txId: "4",
+    payerId: "4",
+    payer: "Sarah",
+    expense: "Boat rental",
+    sum: 200.0,
+  },
+  { txId: "5", payerId: "4", payer: "Sarah", expense: "Gas", sum: 75.0 },
 ];
 let maxTxId = 5;
 
 const refreshBalances = () => {
   personData.forEach((p) => {
     p.balance = txData
-      .map((tx: Transaction) => (tx.payer === p.name ? tx.sum : 0))
+      .map((tx: Transaction) => (tx.payerId === p.id ? tx.sum : 0))
       .reduce(
         (oldValue, currentValue) => Number(oldValue) + Number(currentValue)
       );
@@ -50,6 +56,9 @@ const QueriesDev: Queries = {
   getTransactions: () => Promise.resolve(JSON.parse(JSON.stringify(txData))),
   createTransaction: (t: Transaction) => {
     t.txId = String(++maxTxId);
+    if (!t.payer) {
+      t.payer = personData.filter((p) => p.id == t.payerId)[0].name;
+    }
     txData.push(t);
     return Promise.resolve();
   },
