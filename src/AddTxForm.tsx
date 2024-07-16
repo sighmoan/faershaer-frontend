@@ -75,10 +75,14 @@ const AddTxForm = () => {
         placeholder="How much was it?"
       />
       <button
-        className={`btn btn-primary ${!valid && "btn-disabled"}`}
+        className={`btn ${!addTx.isPending && "btn-primary"} ${!valid && "btn-disabled"}`}
         type="submit"
       >
-        Submit
+        {addTx.isPending ? (
+          <span className="loading loading-ring loading-lg"></span>
+        ) : (
+          "Submit"
+        )}
       </button>
     </form>
   );
