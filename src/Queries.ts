@@ -76,9 +76,12 @@ const QueriesDev: Queries = {
  *
  */
 
+const TRANSACTIONS_ENDPOINT = "/transactions";
+const PERSONS_ENDPOINT = "/persons";
+
 const QueriesProduction: Queries = {
   getTransactions: () => {
-    const url = `${baseUrl}/`;
+    const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}`;
     return fetch(url)
       .then((response) => response.json())
       .then((data) => {
@@ -88,7 +91,7 @@ const QueriesProduction: Queries = {
       });
   },
   createTransaction: (t) => {
-    const url = `${baseUrl}`;
+    const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}`;
     const options = {
       method: "POST",
       headers: {
@@ -99,7 +102,7 @@ const QueriesProduction: Queries = {
     return fetch(url, options).then(() => Promise.resolve());
   },
   deleteTransaction: (txId: string) => {
-    const url = `${baseUrl}/${txId}`;
+    const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}/${txId}`;
     const options = {
       method: "DELETE",
     };
