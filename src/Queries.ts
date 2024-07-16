@@ -36,6 +36,16 @@ const txData: Transaction[] = [
 ];
 let maxTxId = 5;
 
+const refreshBalances = () => {
+  personData.forEach((p) => {
+    p.balance = txData
+      .map((tx: Transaction) => (tx.payer === p.name ? tx.sum : 0))
+      .reduce(
+        (oldValue, currentValue) => Number(oldValue) + Number(currentValue)
+      );
+  });
+};
+
 const QueriesDev: Queries = {
   getTransactions: () => Promise.resolve(JSON.parse(JSON.stringify(txData))),
   createTransaction: (t: Transaction) => {
@@ -53,7 +63,10 @@ const QueriesDev: Queries = {
       reject();
     });
   },
-  getPersons: () => Promise.resolve(JSON.parse(JSON.stringify(personData))),
+  getPersons: () => {
+    refreshBalances();
+    return Promise.resolve(JSON.parse(JSON.stringify(personData)));
+  },
 };
 
 /*****
