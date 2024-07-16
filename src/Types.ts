@@ -11,3 +11,9 @@ export type Person = {
   name: string;
   balance: number;
 };
+
+export type Reimbursement = {
+  debtor: Person;
+  creditor: Person;
+  amount: number;
+};
