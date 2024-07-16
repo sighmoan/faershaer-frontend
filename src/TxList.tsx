@@ -15,8 +15,8 @@ const TxList = () => {
   const tx: Transaction[] = data!;
 
   return (
-    <section className="px-10 py-20">
-      <table className="w-full">
+    <section>
+      <table className="table">
         <thead>
           <tr>
             <th>Payer</th>

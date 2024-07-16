@@ -14,7 +14,9 @@ const TxRow = (t: Transaction) => {
       <td>{t.expense}</td>
       <td>{t.sum}kr</td>
       <td>
-        <button onClick={() => deleteTx.mutate()}>X</button>
+        <button className="btn" onClick={() => deleteTx.mutate()}>
+          X
+        </button>
       </td>
     </tr>
   );

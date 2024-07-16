@@ -2,9 +2,11 @@ import { Person } from "./Types";
 
 const PersonBalance = (p: Person) => {
   return (
-    <div>
-      <h3>{p.name}</h3>
-      <h4>{p.balance}</h4>
+    <div className="card bg-primary text-primary-content">
+      <div className="card-body">
+        <h3 className="card-title">{p.name}</h3>
+        <h4>{p.balance}</h4>
+      </div>
     </div>
   );
 };

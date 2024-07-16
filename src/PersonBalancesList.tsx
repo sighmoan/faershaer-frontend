@@ -15,7 +15,7 @@ const PersonBalancesList = () => {
   const persons: Person[] = data;
 
   return (
-    <section>
+    <section className="flex gap-3 place-content-center">
       {persons.map((p) => (
         <PersonBalance key={p.id} {...p} />
       ))}
