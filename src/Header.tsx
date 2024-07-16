@@ -1,3 +1,5 @@
+import { Link } from "@tanstack/react-router";
+
 const Header = () => {
   return (
     <header>
@@ -6,6 +8,32 @@ const Header = () => {
       </div>
       <div className="bg-primary hero min-h-60">
         <h1 className="text-white text-4xl">Picnic @ Tantolunden</h1>
+      </div>
+      <div className="mx-auto max-w-xl tabs tabs-bordered mb-10">
+        <Link
+          role="tab"
+          className="tab"
+          activeProps={{ className: "tab-active" }}
+          to="/"
+        >
+          Transactions
+        </Link>
+        <Link
+          role="tab"
+          className="tab"
+          activeProps={{ className: "tab-active" }}
+          to="/balances"
+        >
+          Balances
+        </Link>
+        <Link
+          role="tab"
+          className="tab"
+          activeProps={{ className: "tab-active" }}
+          to="/reimbursements"
+        >
+          Reimbursements
+        </Link>
       </div>
     </header>
   );
