@@ -15,20 +15,22 @@ const TxList = () => {
   const tx: Transaction[] = data!;
 
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Payer</th>
-          <th>Expense</th>
-          <th>Sum</th>
-        </tr>
-      </thead>
-      <tbody>
-        {tx.map((t) => (
-          <TxRow key={t.txId} {...t}></TxRow>
-        ))}
-      </tbody>
-    </table>
+    <section className="px-10 py-20">
+      <table className="w-full">
+        <thead>
+          <tr>
+            <th>Payer</th>
+            <th>Expense</th>
+            <th>Sum</th>
+          </tr>
+        </thead>
+        <tbody>
+          {tx.map((t) => (
+            <TxRow key={t.txId} {...t}></TxRow>
+          ))}
+        </tbody>
+      </table>
+    </section>
   );
 };
 
