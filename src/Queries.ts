@@ -108,7 +108,10 @@ const QueriesProduction: Queries = {
     };
     return fetch(url, options).then(() => Promise.resolve());
   },
-  getPersons: () => Promise.reject(),
+  getPersons: () => {
+    const url = `${baseUrl}${PERSONS_ENDPOINT}`;
+    return fetch(url).then((response) => response.json());
+  },
 };
 
 let QueriesActual = QueriesDev;
