@@ -25,6 +25,16 @@ const TxList = () => {
           </tr>
         </thead>
         <tbody>
+          {tx.length == 0 && (
+            <td colSpan={3}>
+              <p className="text-center italic">
+                There are no recorded transactions!
+                <br />
+                To start splitting expenses, add some things that people have
+                paid for, using the form below.
+              </p>
+            </td>
+          )}
           {tx.map((t) => (
             <TxRow key={t.txId} {...t}></TxRow>
           ))}
