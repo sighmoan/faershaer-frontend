@@ -1,9 +1,20 @@
 import { QueriesActual as Queries } from "./Queries";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Person, Transaction } from "./Types";
+import { useState } from "react";
 
 const AddTxForm = () => {
+  const [valid, setValid] = useState(false);
+
   const queryClient = useQueryClient();
+
+  const validate = (e: React.FormEvent<HTMLFormElement>) => {
+    const isValid =
+      e.currentTarget.payerId.value &&
+      e.currentTarget.expense.value &&
+      e.currentTarget.sum.value > 0;
+    setValid(isValid);
+  };
 
   const { isPending, error, data } = useQuery({
     queryKey: ["personData"],
@@ -35,6 +46,7 @@ const AddTxForm = () => {
   return (
     <form
       onSubmit={handleSubmit}
+      onChange={validate}
       className="form-control flex-auto gap-2 my-10"
     >
       <label htmlFor="payerId">Payer</label>
@@ -62,7 +74,10 @@ const AddTxForm = () => {
         className="input input-bordered"
         placeholder="How much was it?"
       />
-      <button className="btn btn-primary" type="submit">
+      <button
+        className={`btn btn-primary ${!valid && "btn-disabled"}`}
+        type="submit"
+      >
         Submit
       </button>
     </form>
