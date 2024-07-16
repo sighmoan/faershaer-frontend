@@ -1,5 +1,5 @@
 import { QueriesSpec } from "./QueriesSpec";
-import { Person, Transaction } from "../Types";
+import { Person, Reimbursement, Transaction } from "../Types";
 
 const personData: Person[] = [
   { id: "1", name: "John", balance: 500.0 },
@@ -22,6 +22,24 @@ const txData: Transaction[] = [
   { txId: "5", payerId: "4", payer: "Sarah", expense: "Gas", sum: 75.0 },
 ];
 let maxTxId = 5;
+
+const reimbursementData: Reimbursement[] = [
+  {
+    debtor: { id: "1", name: "John Steinbeck", balance: 300 },
+    creditor: { id: "2", name: "Joyce Carol Oates", balance: 300 },
+    amount: 400,
+  },
+  {
+    debtor: { id: "3", name: "Jason Mraz", balance: 300 },
+    creditor: { id: "4", name: "Bob Malecki", balance: 300 },
+    amount: 590,
+  },
+  {
+    debtor: { id: "5", name: "Johnson", balance: 300 },
+    creditor: { id: "6", name: "Mark Watson", balance: 300 },
+    amount: 2300,
+  },
+];
 
 const refreshBalances = () => {
   personData.forEach((p) => {
@@ -57,6 +75,7 @@ const QueriesDev: QueriesSpec = {
     refreshBalances();
     return Promise.resolve(JSON.parse(JSON.stringify(personData)));
   },
+  getReimbursements: () => Promise.resolve(reimbursementData),
 };
 
 export default QueriesDev;

@@ -1,24 +1,18 @@
 import ReimbursementBox from "./ReimbursementBox";
 import { Reimbursement } from "./Types";
+import { useQuery } from "@tanstack/react-query";
+import { Queries } from "./api/Queries";
 
 const ReimbursementBoxList = () => {
-  const rbs: Reimbursement[] = [
-    {
-      debtor: { id: "1", name: "John", balance: 300 },
-      creditor: { id: "2", name: "Joyce", balance: 300 },
-      amount: 400,
-    },
-    {
-      debtor: { id: "3", name: "Alice", balance: 300 },
-      creditor: { id: "4", name: "Bob", balance: 300 },
-      amount: 590,
-    },
-    {
-      debtor: { id: "5", name: "Johnson", balance: 300 },
-      creditor: { id: "6", name: "Mark Watson", balance: 300 },
-      amount: 2300,
-    },
-  ];
+  const { isPending, error, data } = useQuery({
+    queryKey: ["reimbursementData"],
+    queryFn: Queries.getReimbursements,
+  });
+
+  if (isPending) return "Loading reimbursements . . . ";
+  if (error) return "Error loading reimbursements!";
+
+  const rbs: Reimbursement[] = data;
 
   return (
     <section>
