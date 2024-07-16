@@ -9,8 +9,8 @@ function App() {
     <>
       <Header />
       <main className="mx-auto max-w-xl">
-        <AddTxForm />
         <TxList></TxList>
+        <AddTxForm />
         <PersonBalancesList />
       </main>
     </>
