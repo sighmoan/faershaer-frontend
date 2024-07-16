@@ -33,10 +33,14 @@ const AddTxForm = () => {
   if (error) return "Error loading persons!";
 
   return (
-    <form onSubmit={handleSubmit}>
-      <select name="payerId">
+    <form
+      onSubmit={handleSubmit}
+      className="form-control flex-auto gap-2 my-10"
+    >
+      <label htmlFor="payerId">Payer</label>
+      <select name="payerId" className="select select-bordered">
         <option key="blank" value="">
-          -- Who paid?
+          Who paid for it?
         </option>
         {data!.map((p: Person) => (
           <option key={p.id} value={p.id}>
@@ -44,8 +48,20 @@ const AddTxForm = () => {
           </option>
         ))}
       </select>
-      <input type="text" name="expense" />
-      <input type="number" name="sum" />
+      <label htmlFor="expense">Label</label>
+      <input
+        type="text"
+        name="expense"
+        className="input input-bordered"
+        placeholder="What was it?"
+      />
+      <label htmlFor="sum">Sum</label>
+      <input
+        type="number"
+        name="sum"
+        className="input input-bordered"
+        placeholder="How much was it?"
+      />
       <button className="btn btn-primary" type="submit">
         Submit
       </button>
