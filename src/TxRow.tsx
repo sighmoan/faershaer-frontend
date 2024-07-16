@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Transaction } from "./Types";
-import { QueriesActual as Queries } from "./Queries";
+import { Queries } from "./api/Queries";
 
 const TxRow = (t: Transaction) => {
   const client = useQueryClient();

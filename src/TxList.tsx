@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import TxRow from "./TxRow.tsx";
 import { Transaction } from "./Types.ts";
-import { QueriesActual as Queries } from "./Queries.ts";
+import { Queries } from "./api/Queries.ts";
 
 const TxList = () => {
   const { isPending, error, data } = useQuery({

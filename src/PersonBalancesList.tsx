@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { QueriesActual as Queries } from "./Queries";
+import { Queries } from "./api/Queries";
 import PersonBalance from "./PersonBalance";
 import { Person } from "./Types";
 

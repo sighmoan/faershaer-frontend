@@ -1,4 +1,4 @@
-import { QueriesActual as Queries } from "./Queries";
+import { Queries } from "./api/Queries";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Person, Transaction } from "./Types";
 import { useState } from "react";
