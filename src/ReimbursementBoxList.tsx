@@ -18,7 +18,7 @@ const ReimbursementBoxList = () => {
     <section>
       {rbs.map((rb) => (
         <ReimbursementBox
-          key={String(rb.creditor.id) + ">" + String(rb.debtor.id)}
+          key={String(rb.creditor) + ">" + String(rb.debtor)}
           {...rb}
         />
       ))}
