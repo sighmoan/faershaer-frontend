@@ -17,7 +17,7 @@ const EventsList = () => {
     <>
       <h1>All Events</h1>
       {data?.map((event: Event) => (
-        <Link to={`event-${event.id}`}>
+        <Link to={`event-${event.id}/transactions`}>
           <div>
             <h2>{event.label}</h2>
           </div>

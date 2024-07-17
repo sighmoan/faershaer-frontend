@@ -16,9 +16,10 @@ const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 const QueriesProduction = (eventSlug: string, eventId: string): QueriesSpec => {
   const baseUrl = `${apiHost}${apiBase}/events/${eventId}`;
   return {
-    getEventSlugAndId: () => eventSlug + "-" + eventId,
+    getEventSlug: () => eventSlug,
     getEvents: () => {
-      return Promise.reject();
+      const url = `${apiHost}${apiBase}/events`;
+      return fetch(url).then((response) => response.json());
     },
     getEventDetails: () => {
       const url = `${baseUrl}`;
@@ -84,9 +85,10 @@ const QueriesProduction = (eventSlug: string, eventId: string): QueriesSpec => {
 export const UseFSQueries = () => {
   const { eventSlug } = useParams({ strict: false });
   const eventId = eventSlug ? eventSlug.split("-")[1] : "0";
+  console.log("the event ID is ", eventId);
   let Queries = QueriesDev;
   if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
-    Queries = QueriesProduction(eventId);
+    Queries = QueriesProduction(eventSlug!, eventId);
   }
   return Queries;
 };

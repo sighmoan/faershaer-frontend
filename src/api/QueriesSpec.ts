@@ -1,7 +1,7 @@
 import { Event, Person, Transaction, Reimbursement } from "../Types";
 
 export type QueriesSpec = {
-  getEventIdAndSlug: () => string;
+  getEventSlug: () => string;
   getEvents: () => Promise<Event[]>;
   getEventDetails: () => Promise<Event>;
   getTransactions: () => Promise<Transaction[]>;

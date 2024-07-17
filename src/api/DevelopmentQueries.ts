@@ -71,7 +71,7 @@ const refreshBalances = () => {
 };
 
 const QueriesDev: QueriesSpec = {
-  getEventIdAndSlug: () => "solna-1",
+  getEventSlug: () => "solna-1",
   getEvents: () =>
     new Promise((resolve) => setTimeout(() => resolve(events), devApiDelay)),
   getEventDetails: () =>

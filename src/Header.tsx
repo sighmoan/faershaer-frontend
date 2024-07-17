@@ -21,7 +21,7 @@ const Header = () => {
           className="tab"
           activeProps={{ className: "tab-active" }}
           to="/$eventSlug/transactions"
-          params={{ eventSlug: Queries.getEventIdAndSlug() }}
+          params={{ eventSlug: Queries.getEventSlug() }}
         >
           Transactions
         </Link>
@@ -30,7 +30,7 @@ const Header = () => {
           className="tab"
           activeProps={{ className: "tab-active" }}
           to="/$eventSlug/balances"
-          params={{ eventSlug: Queries.getEventIdAndSlug() }}
+          params={{ eventSlug: Queries.getEventSlug() }}
         >
           Balances
         </Link>
@@ -39,7 +39,7 @@ const Header = () => {
           className="tab"
           activeProps={{ className: "tab-active" }}
           to="/$eventSlug/reimbursements"
-          params={{ eventSlug: Queries.getEventIdAndSlug() }}
+          params={{ eventSlug: Queries.getEventSlug() }}
         >
           Reimbursements
         </Link>
