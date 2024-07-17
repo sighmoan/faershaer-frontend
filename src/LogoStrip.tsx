@@ -1,7 +1,11 @@
+import { Link } from "@tanstack/react-router";
+
 const LogoStrip = () => {
   return (
     <div className="mx-auto max-w-xl">
-      <h3 className="text-slate font-black italic">FÄRSHÄR</h3>
+      <Link to="/">
+        <h3 className="text-slate font-black italic">FÄRSHÄR</h3>
+      </Link>
     </div>
   );
 };
