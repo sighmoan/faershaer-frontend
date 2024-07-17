@@ -9,6 +9,7 @@ const personData: Person[] = [
   { id: "3", name: "Bob", balance: 120.0 },
   { id: "4", name: "Sarah", balance: 275.0 },
 ];
+let maxPersonId = 4;
 
 const txData: Transaction[] = [
   { txId: "1", payerId: "1", payer: "John", expense: "Wine", sum: 500.0 },
@@ -80,10 +81,18 @@ const QueriesDev: QueriesSpec = {
   getPersons: () =>
     new Promise((resolve) => {
       refreshBalances();
+      console.log("getting people, persondata being ", personData);
       setTimeout(
         () => resolve(JSON.parse(JSON.stringify(personData))),
         devApiDelay
       );
+    }),
+  createPerson: (p: Person) =>
+    new Promise((resolve) => {
+      p.id = String(++maxPersonId);
+      personData.push(p);
+      console.log("added ", p, " person data is now ", personData);
+      setTimeout(resolve, devApiDelay);
     }),
   getReimbursements: () => Promise.resolve(reimbursementData),
 };

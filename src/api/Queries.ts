@@ -46,6 +46,9 @@ const QueriesProduction: QueriesSpec = {
     const url = `${baseUrl}${PERSONS_ENDPOINT}`;
     return fetch(url).then((response) => response.json());
   },
+  createPerson: () => {
+    return Promise.reject();
+  },
   getReimbursements: () => {
     const url = `${baseUrl}${REIMBURSEMENT_ENDPOINT}`;
     return fetch(url).then((response) => response.json());

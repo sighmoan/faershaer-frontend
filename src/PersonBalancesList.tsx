@@ -5,7 +5,7 @@ import { Person } from "./Types";
 
 const PersonBalancesList = () => {
   const { isPending, error, data } = useQuery({
-    queryKey: ["txData", "personData"],
+    queryKey: ["personData", "txData"],
     queryFn: Queries.getPersons,
   });
 

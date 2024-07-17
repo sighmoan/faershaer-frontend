@@ -5,5 +5,6 @@ export type QueriesSpec = {
   createTransaction: (t: Transaction) => Promise<void>;
   deleteTransaction: (id: string) => Promise<void>;
   getPersons: () => Promise<Person[]>;
+  createPerson: (p: Person) => Promise<void>;
   getReimbursements: () => Promise<Reimbursement[]>;
 };
