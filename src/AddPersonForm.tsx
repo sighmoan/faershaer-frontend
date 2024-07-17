@@ -1,9 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Queries } from "./api/Queries";
 import { Person } from "./Types";
+import { useState } from "react";
+import SubmitButton from "./components/SubmitButton";
 
 const AddPersonForm = () => {
   const client = useQueryClient();
+  const [isValid, setValid] = useState(false);
 
   const addPerson = useMutation({
     mutationFn: Queries.createPerson,
@@ -12,6 +15,10 @@ const AddPersonForm = () => {
         predicate: (query) => query.queryKey[0] === "personData",
       }),
   });
+
+  const validate = (e: React.FormEvent<HTMLFormElement>) => {
+    setValid(e.currentTarget.personName.value);
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -30,6 +37,7 @@ const AddPersonForm = () => {
         Add someone who wants to contribute
       </h4>
       <form
+        onChange={validate}
         onSubmit={handleSubmit}
         className="form-control flex-auto gap-2 my-10"
       >
@@ -40,9 +48,7 @@ const AddPersonForm = () => {
           placeholder="name"
           className="input input-bordered"
         />
-        <button type="submit" className="btn btn-primary">
-          Submit
-        </button>
+        <SubmitButton isPending={addPerson.isPending} isValid={isValid} />
       </form>
     </>
   );

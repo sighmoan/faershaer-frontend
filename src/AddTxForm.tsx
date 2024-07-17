@@ -2,6 +2,7 @@ import { Queries } from "./api/Queries";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Person, Transaction } from "./Types";
 import { useState } from "react";
+import SubmitButton from "./components/SubmitButton";
 
 const AddTxForm = () => {
   const [valid, setValid] = useState(false);
@@ -76,16 +77,7 @@ const AddTxForm = () => {
           className="input input-bordered"
           placeholder="How much was it?"
         />
-        <button
-          className={`btn ${!addTx.isPending && "btn-primary"} ${!valid && "btn-disabled"}`}
-          type="submit"
-        >
-          {addTx.isPending ? (
-            <span className="loading loading-ring loading-lg"></span>
-          ) : (
-            "Submit"
-          )}
-        </button>
+        <SubmitButton isPending={addTx.isPending} isValid={valid} />
       </form>
     </>
   );
