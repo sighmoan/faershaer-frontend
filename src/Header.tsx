@@ -6,13 +6,10 @@ const Header = () => {
   const Queries = UseFSQueries();
   const { isPending, error, data } = useQuery({
     queryKey: ["eventData"],
-    queryFn: () => Queries.getEventDetails("1"),
+    queryFn: Queries.getEventDetails,
   });
   return (
     <header>
-      <div className="mx-auto max-w-xl">
-        <h3 className="text-slate font-black italic">FÄRSHÄR</h3>
-      </div>
       <div className="bg-primary hero min-h-60">
         <h1 className="text-white text-4xl">
           {isPending ? "Loading . . ." : data!.label}
@@ -23,7 +20,8 @@ const Header = () => {
           role="tab"
           className="tab"
           activeProps={{ className: "tab-active" }}
-          to="/"
+          to="/$eventSlug/transactions"
+          params={{ eventSlug: Queries.getEventIdAndSlug() }}
         >
           Transactions
         </Link>
@@ -31,7 +29,8 @@ const Header = () => {
           role="tab"
           className="tab"
           activeProps={{ className: "tab-active" }}
-          to="/balances"
+          to="/$eventSlug/balances"
+          params={{ eventSlug: Queries.getEventIdAndSlug() }}
         >
           Balances
         </Link>
@@ -39,7 +38,8 @@ const Header = () => {
           role="tab"
           className="tab"
           activeProps={{ className: "tab-active" }}
-          to="/reimbursements"
+          to="/$eventSlug/reimbursements"
+          params={{ eventSlug: Queries.getEventIdAndSlug() }}
         >
           Reimbursements
         </Link>

@@ -13,9 +13,13 @@ const TRANSACTIONS_ENDPOINT = "/transactions";
 const PERSONS_ENDPOINT = "/persons";
 const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 
-const QueriesProduction = (eventId: string): QueriesSpec => {
+const QueriesProduction = (eventSlug: string, eventId: string): QueriesSpec => {
   const baseUrl = `${apiHost}${apiBase}/events/${eventId}`;
   return {
+    getEventSlugAndId: () => eventSlug + "-" + eventId,
+    getEvents: () => {
+      return Promise.reject();
+    },
     getEventDetails: () => {
       const url = `${baseUrl}`;
       return fetch(url).then((response) => response.json());

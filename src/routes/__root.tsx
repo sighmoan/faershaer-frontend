@@ -1,11 +1,11 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
-import Header from "../Header";
+import LogoStrip from "../LogoStrip";
 
 export const Route = createRootRoute({
   component: () => (
     <>
-      <Header />
+      <LogoStrip />
       <Outlet />
       <TanStackRouterDevtools />
     </>

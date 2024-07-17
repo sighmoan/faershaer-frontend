@@ -16,6 +16,17 @@ const eventData: Event = {
   label: "Picnic in Solna",
 };
 
+const events: Event[] = [
+  {
+    id: "1",
+    label: "Picnic in Solna",
+  },
+  {
+    id: "2",
+    label: "Dinner in Sollentuna",
+  },
+];
+
 const txData: Transaction[] = [
   { txId: "1", payerId: "1", payer: "John", expense: "Wine", sum: 500.0 },
   { txId: "2", payerId: "2", payer: "Alice", expense: "Cherries", sum: 150.75 },
@@ -60,6 +71,9 @@ const refreshBalances = () => {
 };
 
 const QueriesDev: QueriesSpec = {
+  getEventIdAndSlug: () => "solna-1",
+  getEvents: () =>
+    new Promise((resolve) => setTimeout(() => resolve(events), devApiDelay)),
   getEventDetails: () =>
     new Promise((resolve) => setTimeout(() => resolve(eventData), devApiDelay)),
   getTransactions: () =>
