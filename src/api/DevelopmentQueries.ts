@@ -27,18 +27,18 @@ let maxTxId = 5;
 
 const reimbursementData: Reimbursement[] = [
   {
-    debtor: { id: "1", name: "John Steinbeck", balance: 300 },
-    creditor: { id: "2", name: "Joyce Carol Oates", balance: 300 },
+    debtor: "John Steinbeck",
+    creditor: "Joyce Carol Oates",
     amount: 400,
   },
   {
-    debtor: { id: "3", name: "Jason Mraz", balance: 300 },
-    creditor: { id: "4", name: "Bob Malecki", balance: 300 },
+    debtor: "Jason Mraz",
+    creditor: "Bob Malecki",
     amount: 590,
   },
   {
-    debtor: { id: "5", name: "Johnson", balance: 300 },
-    creditor: { id: "6", name: "Mark Watson", balance: 300 },
+    debtor: "Johnson",
+    creditor: "Mark Watson",
     amount: 2300,
   },
 ];

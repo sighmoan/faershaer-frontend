@@ -13,7 +13,7 @@ export type Person = {
 };
 
 export type Reimbursement = {
-  debtor: Person;
-  creditor: Person;
+  debtor: string;
+  creditor: string;
   amount: number;
 };
