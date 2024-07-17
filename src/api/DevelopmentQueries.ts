@@ -1,6 +1,8 @@
 import { QueriesSpec } from "./QueriesSpec";
 import { Person, Reimbursement, Transaction } from "../Types";
 
+const devApiDelay = import.meta.env.VITE_DEV_API_DELAY ?? 0;
+
 const personData: Person[] = [
   { id: "1", name: "John", balance: 500.0 },
   { id: "2", name: "Alice", balance: 150.75 },
@@ -52,29 +54,37 @@ const refreshBalances = () => {
 };
 
 const QueriesDev: QueriesSpec = {
-  getTransactions: () => Promise.resolve(JSON.parse(JSON.stringify(txData))),
-  createTransaction: (t: Transaction) => {
-    t.txId = String(++maxTxId);
-    if (!t.payer) {
-      t.payer = personData.filter((p) => p.id == t.payerId)[0].name;
-    }
-    txData.push(t);
-    return Promise.resolve();
-  },
+  getTransactions: () =>
+    new Promise((resolve) =>
+      setTimeout(() => resolve(JSON.parse(JSON.stringify(txData))), devApiDelay)
+    ),
+  createTransaction: (t: Transaction) =>
+    new Promise((resolve) => {
+      t.txId = String(++maxTxId);
+      if (!t.payer) {
+        t.payer = personData.filter((p) => p.id == t.payerId)[0].name;
+      }
+      txData.push(t);
+      setTimeout(resolve, devApiDelay);
+    }),
   deleteTransaction: (id: string) => {
     return new Promise((resolve, reject) => {
       const index: number = txData.findIndex((t) => t.txId == id);
       if (index >= 0) {
         txData.splice(index, 1);
-        resolve();
+        setTimeout(resolve, devApiDelay);
       }
-      reject();
+      setTimeout(reject, devApiDelay);
     });
   },
-  getPersons: () => {
-    refreshBalances();
-    return Promise.resolve(JSON.parse(JSON.stringify(personData)));
-  },
+  getPersons: () =>
+    new Promise((resolve) => {
+      refreshBalances();
+      setTimeout(
+        () => resolve(JSON.parse(JSON.stringify(personData))),
+        devApiDelay
+      );
+    }),
   getReimbursements: () => Promise.resolve(reimbursementData),
 };
 
