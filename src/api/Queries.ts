@@ -57,8 +57,12 @@ const QueriesProduction: QueriesSpec = {
     };
     return fetch(url, options).then(() => Promise.resolve());
   },
-  removePerson: () => {
-    return Promise.reject();
+  removePerson: (id: string) => {
+    const url = `${baseUrl}${PERSONS_ENDPOINT}/${id}`;
+    const options = {
+      method: "DELETE",
+    };
+    return fetch(url, options).then(() => Promise.resolve());
   },
   getReimbursements: () => {
     const url = `${baseUrl}${REIMBURSEMENT_ENDPOINT}`;
