@@ -1,5 +1,5 @@
 import { QueriesSpec } from "./QueriesSpec";
-import { Person, Reimbursement, Transaction } from "../Types";
+import { Event, Person, Reimbursement, Transaction } from "../Types";
 
 const devApiDelay = import.meta.env.VITE_DEV_API_DELAY ?? 0;
 
@@ -10,6 +10,11 @@ const personData: Person[] = [
   { id: "4", name: "Sarah", balance: 275.0 },
 ];
 let maxPersonId = 4;
+
+const eventData: Event = {
+  id: "1",
+  label: "Picnic in Solna",
+};
 
 const txData: Transaction[] = [
   { txId: "1", payerId: "1", payer: "John", expense: "Wine", sum: 500.0 },
@@ -55,6 +60,8 @@ const refreshBalances = () => {
 };
 
 const QueriesDev: QueriesSpec = {
+  getEventDetails: () =>
+    new Promise((resolve) => setTimeout(() => resolve(eventData), devApiDelay)),
   getTransactions: () =>
     new Promise((resolve) =>
       setTimeout(() => resolve(JSON.parse(JSON.stringify(txData))), devApiDelay)

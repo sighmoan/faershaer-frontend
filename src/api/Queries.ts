@@ -16,6 +16,10 @@ const PERSONS_ENDPOINT = "/persons";
 const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 
 const QueriesProduction: QueriesSpec = {
+  getEventDetails: () => {
+    const url = `${baseUrl}`;
+    return fetch(url).then((response) => response.json());
+  },
   getTransactions: () => {
     const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}`;
     return fetch(url)

@@ -1,3 +1,8 @@
+export type Event = {
+  id: string;
+  label: string;
+};
+
 export type Transaction = {
   txId?: string;
   payer?: string;
