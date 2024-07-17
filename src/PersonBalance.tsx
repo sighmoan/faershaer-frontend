@@ -1,8 +1,9 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Person } from "./Types";
-import { Queries } from "./api/Queries";
+import { UseFSQueries } from "./api/Queries";
 
 const PersonBalance = (p: Person) => {
+  const Queries = UseFSQueries();
   const queryClient = useQueryClient();
 
   const removePerson = useMutation({

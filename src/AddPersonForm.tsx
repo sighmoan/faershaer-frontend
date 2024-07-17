@@ -1,10 +1,12 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Queries } from "./api/Queries";
+import { UseFSQueries } from "./api/Queries";
 import { Person } from "./Types";
 import { useState } from "react";
 import SubmitButton from "./components/SubmitButton";
 
 const AddPersonForm = () => {
+  const Queries = UseFSQueries();
+
   const client = useQueryClient();
   const [isValid, setValid] = useState(false);
 

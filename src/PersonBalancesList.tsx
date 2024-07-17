@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
-import { Queries } from "./api/Queries";
+import { UseFSQueries } from "./api/Queries";
 import PersonBalance from "./PersonBalance";
 import { Person } from "./Types";
 
 const PersonBalancesList = () => {
+  const Queries = UseFSQueries();
+
   const { isPending, error, data } = useQuery({
     queryKey: ["personData", "txData"],
     queryFn: Queries.getPersons,

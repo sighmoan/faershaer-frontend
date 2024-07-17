@@ -1,9 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import TxRow from "./TxRow.tsx";
 import { Transaction } from "./Types.ts";
-import { Queries } from "./api/Queries.ts";
+import { UseFSQueries } from "./api/Queries.ts";
 
 const TxList = () => {
+  const Queries = UseFSQueries();
+
   const { isPending, error, data } = useQuery({
     queryKey: ["txData"],
     queryFn: Queries.getTransactions,

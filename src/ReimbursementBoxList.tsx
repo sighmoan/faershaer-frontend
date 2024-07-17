@@ -1,9 +1,11 @@
 import ReimbursementBox from "./ReimbursementBox";
 import { Reimbursement } from "./Types";
 import { useQuery } from "@tanstack/react-query";
-import { Queries } from "./api/Queries";
+import { UseFSQueries } from "./api/Queries";
 
 const ReimbursementBoxList = () => {
+  const Queries = UseFSQueries();
+
   const { isPending, error, data } = useQuery({
     queryKey: ["reimbursementData"],
     queryFn: Queries.getReimbursements,

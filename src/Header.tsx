@@ -1,8 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
-import { Queries } from "./api/Queries";
+import { UseFSQueries } from "./api/Queries";
 
 const Header = () => {
+  const Queries = UseFSQueries();
   const { isPending, error, data } = useQuery({
     queryKey: ["eventData"],
     queryFn: () => Queries.getEventDetails("1"),

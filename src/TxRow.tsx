@@ -1,8 +1,10 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Transaction } from "./Types";
-import { Queries } from "./api/Queries";
+import { UseFSQueries } from "./api/Queries";
 
 const TxRow = (t: Transaction) => {
+  const Queries = UseFSQueries();
+
   const client = useQueryClient();
   const deleteTx = useMutation({
     mutationFn: () => Queries.deleteTransaction(t.txId!),
