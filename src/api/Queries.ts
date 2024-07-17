@@ -1,3 +1,4 @@
+import { useContext } from "react";
 import { Transaction } from "../Types";
 import QueriesDev from "./DevelopmentQueries";
 import { QueriesSpec } from "./QueriesSpec";
@@ -6,8 +7,9 @@ const apiHost = import.meta.env.VITE_API_HOST;
 if (!apiHost) {
   throw new Error("API host may not be unset.");
 }
+const currentEvent = "1";
 const apiBase = import.meta.env.VITE_API_BASE ?? "";
-const baseUrl = `${apiHost}${apiBase}`;
+const baseUrl = `${apiHost}${apiBase}/events/${currentEvent}`;
 
 const TRANSACTIONS_ENDPOINT = "/transactions";
 const PERSONS_ENDPOINT = "/persons";
