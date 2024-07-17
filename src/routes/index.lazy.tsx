@@ -3,6 +3,10 @@ import EventsList from "../EventsList";
 
 export const Route = createLazyFileRoute("/")({
   component: () => {
-    return <EventsList />;
+    return (
+      <main className="mx-auto max-w-xl">
+        <EventsList />
+      </main>
+    );
   },
 });

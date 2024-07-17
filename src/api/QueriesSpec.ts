@@ -4,6 +4,7 @@ export type QueriesSpec = {
   getEventSlug: () => string;
   getEvents: () => Promise<Event[]>;
   getEventDetails: () => Promise<Event>;
+  getEventDetailsFor: (id: string) => Promise<Event>;
   getTransactions: () => Promise<Transaction[]>;
   createTransaction: (t: Transaction) => Promise<void>;
   deleteTransaction: (id: string) => Promise<void>;

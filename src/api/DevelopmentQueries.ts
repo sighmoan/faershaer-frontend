@@ -76,6 +76,8 @@ const QueriesDev: QueriesSpec = {
     new Promise((resolve) => setTimeout(() => resolve(events), devApiDelay)),
   getEventDetails: () =>
     new Promise((resolve) => setTimeout(() => resolve(eventData), devApiDelay)),
+  getEventDetailsFor: () =>
+    new Promise((resolve) => setTimeout(() => resolve(eventData), devApiDelay)),
   getTransactions: () =>
     new Promise((resolve) =>
       setTimeout(() => resolve(JSON.parse(JSON.stringify(txData))), devApiDelay)

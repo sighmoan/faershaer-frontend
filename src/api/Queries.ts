@@ -25,6 +25,10 @@ const QueriesProduction = (eventSlug: string, eventId: string): QueriesSpec => {
       const url = `${baseUrl}`;
       return fetch(url).then((response) => response.json());
     },
+    getEventDetailsFor: (id: string) => {
+      const url = `${apiHost}${apiBase}/events/${id}`;
+      return fetch(url).then((response) => response.json());
+    },
     getTransactions: () => {
       const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}`;
       return fetch(url)
@@ -86,6 +90,15 @@ export const UseFSQueries = () => {
   const { eventSlug } = useParams({ strict: false });
   const eventId = eventSlug ? eventSlug.split("-")[1] : "0";
   console.log("the event ID is ", eventId);
+  let Queries = QueriesDev;
+  if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
+    Queries = QueriesProduction(eventSlug!, eventId);
+  }
+  return Queries;
+};
+
+export const UseFSQueriesFor = (eventId: string) => {
+  const eventSlug = `event-${eventId}`;
   let Queries = QueriesDev;
   if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
     Queries = QueriesProduction(eventSlug!, eventId);

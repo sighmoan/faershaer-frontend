@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { UseFSQueries } from "./api/Queries";
 import { Event } from "./Types";
-import { Link } from "@tanstack/react-router";
+import EventCard from "./EventCard";
 
 const EventsList = () => {
   const Queries = UseFSQueries();
@@ -15,14 +15,10 @@ const EventsList = () => {
 
   return (
     <>
-      <h1>All Events</h1>
-      {data?.map((event: Event) => (
-        <Link to={`event-${event.id}/transactions`}>
-          <div>
-            <h2>{event.label}</h2>
-          </div>
-        </Link>
-      ))}
+      <h4 className="font-bold text-lg text-center mt-20">Your Events</h4>
+      <div className="flex">
+        {data?.map((event: Event) => <EventCard key={event.id} {...event} />)}
+      </div>
     </>
   );
 };
