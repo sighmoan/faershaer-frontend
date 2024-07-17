@@ -94,6 +94,15 @@ const QueriesDev: QueriesSpec = {
       console.log("added ", p, " person data is now ", personData);
       setTimeout(resolve, devApiDelay);
     }),
+  removePerson: (id: string) =>
+    new Promise((resolve, reject) => {
+      const index: number = personData.findIndex((p) => p.id == id);
+      if (index >= 0) {
+        personData.splice(index, 1);
+        setTimeout(resolve, devApiDelay);
+      }
+      setTimeout(reject, devApiDelay);
+    }),
   getReimbursements: () => Promise.resolve(reimbursementData),
 };
 
