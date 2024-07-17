@@ -25,10 +25,20 @@ const AddPersonForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={handleSubmit}
+      className="form-control flex-auto gap-2 my-10"
+    >
       <label htmlFor="name">Name</label>
-      <input type="text" name="personName" placeholder="name" />
-      <button type="submit">Submit</button>
+      <input
+        type="text"
+        name="personName"
+        placeholder="name"
+        className="input input-bordered"
+      />
+      <button type="submit" className="btn btn-primary">
+        Submit
+      </button>
     </form>
   );
 };
