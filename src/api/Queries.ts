@@ -3,6 +3,7 @@ import { Transaction } from "../Types";
 import QueriesDev from "./DevelopmentQueries";
 import { QueriesSpec } from "./QueriesSpec";
 import { EventContext } from "../EventContext";
+import { useParams } from "@tanstack/react-router";
 
 const apiHost = import.meta.env.VITE_API_HOST;
 if (!apiHost) {
@@ -81,7 +82,8 @@ const QueriesProduction = (eventId: string): QueriesSpec => {
 };
 
 export const UseFSQueries = () => {
-  const eventId = useContext(EventContext);
+  const { eventSlug } = useParams({ strict: false });
+  const eventId = eventSlug ? eventSlug.split("-")[1] : "0";
   let Queries = QueriesDev;
   if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
     Queries = QueriesProduction(eventId);

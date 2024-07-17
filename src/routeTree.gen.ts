@@ -16,52 +16,59 @@ import { Route as rootRoute } from './routes/__root'
 
 // Create Virtual Routes
 
-const ReimbursementsLazyImport = createFileRoute('/reimbursements')()
-const BalancesLazyImport = createFileRoute('/balances')()
-const IndexLazyImport = createFileRoute('/')()
+const EventSlugIndexLazyImport = createFileRoute('/$eventSlug/')()
+const EventSlugReimbursementsLazyImport = createFileRoute(
+  '/$eventSlug/reimbursements',
+)()
+const EventSlugBalancesLazyImport = createFileRoute('/$eventSlug/balances')()
 
 // Create/Update Routes
 
-const ReimbursementsLazyRoute = ReimbursementsLazyImport.update({
-  path: '/reimbursements',
+const EventSlugIndexLazyRoute = EventSlugIndexLazyImport.update({
+  path: '/$eventSlug/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
-  import('./routes/reimbursements.lazy').then((d) => d.Route),
+  import('./routes/$eventSlug/index.lazy').then((d) => d.Route),
 )
 
-const BalancesLazyRoute = BalancesLazyImport.update({
-  path: '/balances',
-  getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/balances.lazy').then((d) => d.Route))
+const EventSlugReimbursementsLazyRoute =
+  EventSlugReimbursementsLazyImport.update({
+    path: '/$eventSlug/reimbursements',
+    getParentRoute: () => rootRoute,
+  } as any).lazy(() =>
+    import('./routes/$eventSlug/reimbursements.lazy').then((d) => d.Route),
+  )
 
-const IndexLazyRoute = IndexLazyImport.update({
-  path: '/',
+const EventSlugBalancesLazyRoute = EventSlugBalancesLazyImport.update({
+  path: '/$eventSlug/balances',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any).lazy(() =>
+  import('./routes/$eventSlug/balances.lazy').then((d) => d.Route),
+)
 
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+    '/$eventSlug/balances': {
+      id: '/$eventSlug/balances'
+      path: '/$eventSlug/balances'
+      fullPath: '/$eventSlug/balances'
+      preLoaderRoute: typeof EventSlugBalancesLazyImport
       parentRoute: typeof rootRoute
     }
-    '/balances': {
-      id: '/balances'
-      path: '/balances'
-      fullPath: '/balances'
-      preLoaderRoute: typeof BalancesLazyImport
+    '/$eventSlug/reimbursements': {
+      id: '/$eventSlug/reimbursements'
+      path: '/$eventSlug/reimbursements'
+      fullPath: '/$eventSlug/reimbursements'
+      preLoaderRoute: typeof EventSlugReimbursementsLazyImport
       parentRoute: typeof rootRoute
     }
-    '/reimbursements': {
-      id: '/reimbursements'
-      path: '/reimbursements'
-      fullPath: '/reimbursements'
-      preLoaderRoute: typeof ReimbursementsLazyImport
+    '/$eventSlug/': {
+      id: '/$eventSlug/'
+      path: '/$eventSlug'
+      fullPath: '/$eventSlug'
+      preLoaderRoute: typeof EventSlugIndexLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -70,9 +77,9 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexLazyRoute,
-  BalancesLazyRoute,
-  ReimbursementsLazyRoute,
+  EventSlugBalancesLazyRoute,
+  EventSlugReimbursementsLazyRoute,
+  EventSlugIndexLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -83,19 +90,19 @@ export const routeTree = rootRoute.addChildren({
     "__root__": {
       "filePath": "__root.tsx",
       "children": [
-        "/",
-        "/balances",
-        "/reimbursements"
+        "/$eventSlug/balances",
+        "/$eventSlug/reimbursements",
+        "/$eventSlug/"
       ]
     },
-    "/": {
-      "filePath": "index.lazy.tsx"
+    "/$eventSlug/balances": {
+      "filePath": "$eventSlug/balances.lazy.tsx"
     },
-    "/balances": {
-      "filePath": "balances.lazy.tsx"
+    "/$eventSlug/reimbursements": {
+      "filePath": "$eventSlug/reimbursements.lazy.tsx"
     },
-    "/reimbursements": {
-      "filePath": "reimbursements.lazy.tsx"
+    "/$eventSlug/": {
+      "filePath": "$eventSlug/index.lazy.tsx"
     }
   }
 }
