@@ -44,47 +44,50 @@ const AddTxForm = () => {
   if (error) return "Error loading persons!";
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      onChange={validate}
-      className="form-control flex-auto gap-2 my-10"
-    >
-      <label htmlFor="payerId">Payer</label>
-      <select name="payerId" className="select select-bordered">
-        <option key="blank" value="">
-          Who paid for it?
-        </option>
-        {data!.map((p: Person) => (
-          <option key={p.id} value={p.id}>
-            {p.name}
-          </option>
-        ))}
-      </select>
-      <label htmlFor="expense">Label</label>
-      <input
-        type="text"
-        name="expense"
-        className="input input-bordered"
-        placeholder="What was it?"
-      />
-      <label htmlFor="sum">Sum</label>
-      <input
-        type="number"
-        name="sum"
-        className="input input-bordered"
-        placeholder="How much was it?"
-      />
-      <button
-        className={`btn ${!addTx.isPending && "btn-primary"} ${!valid && "btn-disabled"}`}
-        type="submit"
+    <>
+      <h4 className="font-bold text-lg text-center mt-20">Add a transaction</h4>
+      <form
+        onSubmit={handleSubmit}
+        onChange={validate}
+        className="form-control flex-auto gap-2 mb-20"
       >
-        {addTx.isPending ? (
-          <span className="loading loading-ring loading-lg"></span>
-        ) : (
-          "Submit"
-        )}
-      </button>
-    </form>
+        <label htmlFor="payerId">Payer</label>
+        <select name="payerId" className="select select-bordered">
+          <option key="blank" value="">
+            Who paid for it?
+          </option>
+          {data!.map((p: Person) => (
+            <option key={p.id} value={p.id}>
+              {p.name}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="expense">Label</label>
+        <input
+          type="text"
+          name="expense"
+          className="input input-bordered"
+          placeholder="What was it?"
+        />
+        <label htmlFor="sum">Sum</label>
+        <input
+          type="number"
+          name="sum"
+          className="input input-bordered"
+          placeholder="How much was it?"
+        />
+        <button
+          className={`btn ${!addTx.isPending && "btn-primary"} ${!valid && "btn-disabled"}`}
+          type="submit"
+        >
+          {addTx.isPending ? (
+            <span className="loading loading-ring loading-lg"></span>
+          ) : (
+            "Submit"
+          )}
+        </button>
+      </form>
+    </>
   );
 };
 

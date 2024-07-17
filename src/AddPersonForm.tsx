@@ -25,21 +25,26 @@ const AddPersonForm = () => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="form-control flex-auto gap-2 my-10"
-    >
-      <label htmlFor="name">Name</label>
-      <input
-        type="text"
-        name="personName"
-        placeholder="name"
-        className="input input-bordered"
-      />
-      <button type="submit" className="btn btn-primary">
-        Submit
-      </button>
-    </form>
+    <>
+      <h4 className="font-bold text-lg text-center mt-20">
+        Add someone who wants to contribute
+      </h4>
+      <form
+        onSubmit={handleSubmit}
+        className="form-control flex-auto gap-2 my-10"
+      >
+        <label htmlFor="name">Name</label>
+        <input
+          type="text"
+          name="personName"
+          placeholder="name"
+          className="input input-bordered"
+        />
+        <button type="submit" className="btn btn-primary">
+          Submit
+        </button>
+      </form>
+    </>
   );
 };
 
