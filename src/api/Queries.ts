@@ -11,6 +11,7 @@ const baseUrl = `${apiHost}${apiBase}`;
 
 const TRANSACTIONS_ENDPOINT = "/transactions";
 const PERSONS_ENDPOINT = "/persons";
+const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 
 const QueriesProduction: QueriesSpec = {
   getTransactions: () => {
@@ -45,7 +46,10 @@ const QueriesProduction: QueriesSpec = {
     const url = `${baseUrl}${PERSONS_ENDPOINT}`;
     return fetch(url).then((response) => response.json());
   },
-  getReimbursements: () => Promise.reject(),
+  getReimbursements: () => {
+    const url = `${baseUrl}${REIMBURSEMENT_ENDPOINT}`;
+    return fetch(url).then((response) => response.json());
+  },
 };
 
 let Queries = QueriesDev;

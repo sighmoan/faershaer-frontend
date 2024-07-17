@@ -4,7 +4,7 @@ const ReimbursementBox = (rb: Reimbursement) => {
   return (
     <div>
       <p>
-        {rb.debtor} should pay {rb.creditor} {rb.amount}kr.
+        {rb.debtor} should pay {rb.creditor} {Math.round(rb.amount)}kr.
       </p>
     </div>
   );
