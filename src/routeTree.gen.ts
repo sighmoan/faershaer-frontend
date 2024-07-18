@@ -17,6 +17,7 @@ import { Route as EventImport } from './routes/_event'
 
 // Create Virtual Routes
 
+const CreateEventLazyImport = createFileRoute('/create-event')()
 const IndexLazyImport = createFileRoute('/')()
 const EventEventSlugTransactionsLazyImport = createFileRoute(
   '/_event/$eventSlug/transactions',
@@ -29,6 +30,11 @@ const EventEventSlugBalancesLazyImport = createFileRoute(
 )()
 
 // Create/Update Routes
+
+const CreateEventLazyRoute = CreateEventLazyImport.update({
+  path: '/create-event',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() => import('./routes/create-event.lazy').then((d) => d.Route))
 
 const EventRoute = EventImport.update({
   id: '/_event',
@@ -85,6 +91,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EventImport
       parentRoute: typeof rootRoute
     }
+    '/create-event': {
+      id: '/create-event'
+      path: '/create-event'
+      fullPath: '/create-event'
+      preLoaderRoute: typeof CreateEventLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/_event/$eventSlug/balances': {
       id: '/_event/$eventSlug/balances'
       path: '/$eventSlug/balances'
@@ -118,6 +131,7 @@ export const routeTree = rootRoute.addChildren({
     EventEventSlugReimbursementsLazyRoute,
     EventEventSlugTransactionsLazyRoute,
   }),
+  CreateEventLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -129,7 +143,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
-        "/_event"
+        "/_event",
+        "/create-event"
       ]
     },
     "/": {
@@ -142,6 +157,9 @@ export const routeTree = rootRoute.addChildren({
         "/_event/$eventSlug/reimbursements",
         "/_event/$eventSlug/transactions"
       ]
+    },
+    "/create-event": {
+      "filePath": "create-event.lazy.tsx"
     },
     "/_event/$eventSlug/balances": {
       "filePath": "_event/$eventSlug/balances.lazy.tsx",

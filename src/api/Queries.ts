@@ -2,6 +2,7 @@ import { Transaction } from "../Types";
 import QueriesDev from "./DevelopmentQueries";
 import { QueriesSpec } from "./QueriesSpec";
 import { useParams } from "@tanstack/react-router";
+import { Event } from "../Types";
 
 const apiHost = import.meta.env.VITE_API_HOST;
 if (!apiHost) {
@@ -16,6 +17,23 @@ const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 const QueriesProduction = (eventSlug: string, eventId: string): QueriesSpec => {
   const baseUrl = `${apiHost}${apiBase}/events/${eventId}`;
   return {
+    createEvent: (e: Event) => {
+      const url = `${apiHost}${apiBase}/events`;
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: e.label,
+      };
+
+      return fetch(url, options).then((response) => {
+        console.log(response);
+        const location = response.headers.get("Location");
+        console.log("Location is", location);
+        const eventId = location.split("/")[2];
+        console.log("meaning ID is ", eventId);
+        return eventId;
+      });
+    },
     getEventSlug: () => eventSlug,
     getEvents: () => {
       const url = `${apiHost}${apiBase}/events`;
@@ -88,12 +106,22 @@ const QueriesProduction = (eventSlug: string, eventId: string): QueriesSpec => {
 
 export const UseFSQueries = () => {
   const { eventSlug } = useParams({ strict: false });
-  const eventId = eventSlug ? eventSlug.split("-")[1] : "0";
+  const eventId = eventSlug ? eventSlug.split("-")[1] : "-1";
   console.log("the event ID is ", eventId);
+
   let Queries = QueriesDev;
   if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
     Queries = QueriesProduction(eventSlug!, eventId);
   }
+
+  if (!eventId || eventId === "-1") {
+    console.log(
+      "No event ID available, only a subset of FS queries available."
+    );
+    return { createEvent: Queries.createEvent, getEvents: Queries.getEvents };
+  }
+
+  console.log("Queries are ", Queries);
   return Queries;
 };
 

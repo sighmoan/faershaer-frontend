@@ -26,6 +26,7 @@ const events: Event[] = [
     label: "Dinner in Sollentuna",
   },
 ];
+let maxEventId = 2;
 
 const txData: Transaction[] = [
   { txId: "1", payerId: "1", payer: "John", expense: "Wine", sum: 500.0 },
@@ -71,6 +72,19 @@ const refreshBalances = () => {
 };
 
 const QueriesDev: QueriesSpec = {
+  createEvent: (e: Event) => {
+    console.log("yooooo");
+    return new Promise((resolve) => {
+      console.log("yo!");
+      setTimeout(() => {
+        console.log("Yo!");
+        e.id = String(++maxEventId);
+        console.log("Adding ", e);
+        events.push(e);
+        resolve(e);
+      }, devApiDelay);
+    });
+  },
   getEventSlug: () => "solna-1",
   getEvents: () =>
     new Promise((resolve) => setTimeout(() => resolve(events), devApiDelay)),
