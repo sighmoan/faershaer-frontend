@@ -2,6 +2,7 @@ import ReimbursementBox from "./ReimbursementBox";
 import { Reimbursement } from "./Types";
 import { useQuery } from "@tanstack/react-query";
 import { UseFSQueries } from "./api/Queries";
+import { Heading } from "./components/Heading";
 
 const ReimbursementBoxList = () => {
   const Queries = UseFSQueries();
@@ -17,20 +18,25 @@ const ReimbursementBoxList = () => {
   const rbs: Reimbursement[] = [];
   if (data.length > 0) rbs.push(...data);
 
-  return (
+  return rbs.length == 0 ? (
     <section>
-      {rbs.length == 0 && (
-        <p className="text-center italic">
-          When you have added a few people, and a couple of transactions, this
-          is where you'll find out how to split it.
-        </p>
-      )}
+      <p className="text-center italic">
+        When you have added a few people, and a couple of transactions, this is
+        where you'll find out how to split it.
+      </p>
+    </section>
+  ) : (
+    <section>
+      <Heading>Here's how to split the bill evenly:</Heading>
       {rbs.map((rb) => (
         <ReimbursementBox
           key={String(rb.creditor) + ">" + String(rb.debtor)}
           {...rb}
         />
       ))}
+      <p className="text-center">
+        After that's all done, everyone has paid the same!
+      </p>
     </section>
   );
 };
