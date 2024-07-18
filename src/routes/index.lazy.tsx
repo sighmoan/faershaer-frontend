@@ -4,7 +4,7 @@ import EventsList from "../EventsList";
 export const Route = createLazyFileRoute("/")({
   component: () => {
     return (
-      <main className="mx-auto max-w-xl">
+      <main className="mx-auto">
         <EventsList />
       </main>
     );

@@ -16,6 +16,8 @@ const EventCard = (event: Event) => {
   if (isPending) return "Loading . . .";
   if (error) return "Error!";
 
+  const totalPeopleCount = data.length;
+
   return (
     <Link to={`${event.id}/transactions`}>
       <div className="card card-bordered max-w-md shadow-xl m-5">
@@ -24,10 +26,14 @@ const EventCard = (event: Event) => {
         </figure>
         <div className="card-body ">
           <p>
-            With{" "}
+            👥{" "}
+            {totalPeopleCount <= 1 && (
+              <span className="italic text-lightgrey">just you</span>
+            )}
             {data.slice(0, 5).map((person, index) => {
-              if (index == 4 && data.length > 4) return "and more!";
-              if (index == data.length - 1) return `and ${person.name}!`;
+              if (index == 4 && data.length > 4)
+                return `and ${totalPeopleCount - 4} others`;
+              if (index == data.length - 1) return `and ${person.name}`;
               return `${person.name}, `;
             })}
           </p>
