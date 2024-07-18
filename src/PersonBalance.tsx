@@ -1,6 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Person } from "./Types";
 import { UseFSQueries } from "./api/Queries";
+import { PlaceholderAvatar } from "./components/PlaceholderAvatar";
 
 const PersonBalance = (p: Person) => {
   const Queries = UseFSQueries();
@@ -16,9 +17,17 @@ const PersonBalance = (p: Person) => {
 
   return (
     <div className="card shadow-xl card-bordered max-w-xs">
-      <figure>
-        <img src={p.portraitUrl} />
-      </figure>
+      {p.portraitUrl ? (
+        <figure>
+          <img src={p.portraitUrl} />
+        </figure>
+      ) : (
+        <figure className="avatar bg-neutral placeholder">
+          <p className="text-3xl text-neutral-content py-20">
+            <PlaceholderAvatar personName={p.name} />
+          </p>
+        </figure>
+      )}
       <div className="card-body">
         <h3 className="card-title">{p.name}</h3>
         {p.balance == 0 ? (
