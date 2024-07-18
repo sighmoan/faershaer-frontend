@@ -6,8 +6,6 @@ import { Event } from "./Types";
 const EventCard = (event: Event) => {
   const Queries = UseFSQueriesFor(event.id);
 
-  console.log("rendering");
-
   const { isPending, error, data } = useQuery({
     queryKey: ["eventsCardData", { id: event.id }],
     queryFn: Queries.getPersons,
@@ -31,9 +29,9 @@ const EventCard = (event: Event) => {
               <span className="italic text-lightgrey">just you</span>
             )}
             {data.slice(0, 5).map((person, index) => {
-              if (index == 4 && data.length > 4)
+              if (index == 4 && totalPeopleCount > 5)
                 return `and ${totalPeopleCount - 4} others`;
-              if (index == data.length - 1) return `and ${person.name}`;
+              if (index == totalPeopleCount - 1) return `and ${person.name}`;
               return `${person.name}, `;
             })}
           </p>
