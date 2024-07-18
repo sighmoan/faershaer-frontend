@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { UseFSQueries } from "./api/Queries";
 import { Event } from "./Types";
 import EventCard from "./EventCard";
+import { Link } from "@tanstack/react-router";
 
 const EventsList = () => {
   const Queries = UseFSQueries();
@@ -16,7 +17,14 @@ const EventsList = () => {
   return (
     <>
       <h4 className="font-bold text-lg text-center mt-20">Your Events</h4>
-      <div className="flex">
+      <div className="flex justify-center">
+        <Link to="/create-event">
+          <button className="btn bg-primary text-white">
+            Create New Event
+          </button>
+        </Link>
+      </div>
+      <div className="flex flex-wrap">
         {data?.map((event: Event) => <EventCard key={event.id} {...event} />)}
       </div>
     </>
