@@ -134,3 +134,12 @@ export const UseFSQueriesFor = (eventId: string) => {
   }
   return Queries;
 };
+
+export const useFSUser = () => {
+  return {
+    userId: "1",
+    userName: "Simon",
+    portraitUrl:
+      "https://otlibrary.com/wp-content/gallery/bearded-seals/Spitzbergen_Bearded_seal_waving.jpg",
+  };
+};
