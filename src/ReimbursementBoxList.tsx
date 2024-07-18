@@ -15,7 +15,7 @@ const ReimbursementBoxList = () => {
   if (error) return "Error loading reimbursements!";
 
   const rbs: Reimbursement[] = [];
-  if (data.length > 0) rbs.push([...data]);
+  if (data.length > 0) rbs.push(...data);
 
   return (
     <section>
