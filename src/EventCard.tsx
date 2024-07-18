@@ -17,7 +17,7 @@ const EventCard = (event: Event) => {
   if (error) return "Error!";
 
   return (
-    <Link to={`event-${event.id}/transactions`}>
+    <Link to={`${event.id}/transactions`}>
       <div className="card card-bordered max-w-md shadow-xl m-5">
         <figure className="bg-primary min-h-40 p-5">
           <h2 className="card-title text-white">{event.label}</h2>

@@ -15,7 +15,7 @@ const AddEvent = () => {
     mutationFn: Queries.createEvent,
     onSuccess: (variables) => {
       console.log("variables is", variables);
-      navigate({ to: "/" + variables });
+      navigate({ to: `/${variables}/transactions` });
     },
   });
 

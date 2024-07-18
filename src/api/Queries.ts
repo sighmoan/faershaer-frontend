@@ -14,8 +14,8 @@ const TRANSACTIONS_ENDPOINT = "/transactions";
 const PERSONS_ENDPOINT = "/persons";
 const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 
-const QueriesProduction = (eventSlug: string, eventId: string): QueriesSpec => {
-  const baseUrl = `${apiHost}${apiBase}/events/${eventId}`;
+const QueriesProduction = (eventSlug: string): QueriesSpec => {
+  const baseUrl = `${apiHost}${apiBase}/events/${eventSlug}`;
   return {
     createEvent: (e: Event) => {
       const url = `${apiHost}${apiBase}/events`;
@@ -106,12 +106,13 @@ const QueriesProduction = (eventSlug: string, eventId: string): QueriesSpec => {
 
 export const UseFSQueries = () => {
   const { eventSlug } = useParams({ strict: false });
-  const eventId = eventSlug ? eventSlug.split("-")[1] : "-1";
+  const eventId = eventSlug ?? "-1";
+
   console.log("the event ID is ", eventId);
 
   let Queries = QueriesDev;
   if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
-    Queries = QueriesProduction(eventSlug!, eventId);
+    Queries = QueriesProduction(eventId);
   }
 
   if (!eventId || eventId === "-1") {
@@ -126,10 +127,10 @@ export const UseFSQueries = () => {
 };
 
 export const UseFSQueriesFor = (eventId: string) => {
-  const eventSlug = `event-${eventId}`;
+  const eventSlug = eventId;
   let Queries = QueriesDev;
   if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
-    Queries = QueriesProduction(eventSlug!, eventId);
+    Queries = QueriesProduction(eventSlug);
   }
   return Queries;
 };
