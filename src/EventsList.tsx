@@ -24,7 +24,7 @@ const EventsList = () => {
           </button>
         </Link>
       </div>
-      <div className="flex flex-wrap">
+      <div className="flex flex-wrap justify-evenly">
         {data?.map((event: Event) => <EventCard key={event.id} {...event} />)}
       </div>
     </>
