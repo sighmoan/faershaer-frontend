@@ -4,6 +4,7 @@ import { QueriesSpec } from "./QueriesSpec";
 import { useParams } from "@tanstack/react-router";
 import { Event } from "../Types";
 import { useQuery } from "@tanstack/react-query";
+import { useUser } from "@clerk/clerk-react";
 
 const apiHost = import.meta.env.VITE_API_HOST;
 if (!apiHost) {
@@ -15,22 +16,23 @@ const TRANSACTIONS_ENDPOINT = "/transactions";
 const PERSONS_ENDPOINT = "/persons";
 const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 
-const USER_ID = "1";
-
 const QueriesProduction = (eventSlug: string): QueriesSpec => {
+  const User = useUser();
   const baseUrl = `${apiHost}${apiBase}/events/${eventSlug}`;
-  const authHeader = { Authorization: USER_ID };
+  console.log("Generating queries. Is the user signed in? ", User.isSignedIn);
+  const authHeader = User.isSignedIn ? { Authorization: User.user.id } : {};
+  console.log("Hence, the auth header is ", authHeader);
   return {
     createEvent: (e: Event) => {
       const url = `${apiHost}${apiBase}/events`;
       const options = {
-        ...authHeader,
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { ...authHeader, "Content-Type": "application/json" },
         body: e.label,
       };
 
       return fetch(url, options).then((response) => {
+        console.log("and the response is");
         console.log(response);
         const location = response.headers.get("Location");
         console.log("Location is", location);
@@ -163,15 +165,33 @@ export const UseFSQueriesFor = (eventId: string) => {
 };
 
 export const useFSUser = () => {
+  const user = useUser();
+
+  if (!user.isLoaded) {
+    console.log("user is not loaded");
+    return { isPending: true };
+  }
+  if (user.isLoaded && !user.isSignedIn) {
+    console.log("user is loaded, not signed in");
+    return { isPending: false, error: null, data: undefined };
+  }
+
+  const userId = user.user.id;
+
   const userQuery = useQuery({
     queryKey: ["userData"],
     queryFn: () => {
       const url = `${apiHost}${apiBase}/user`;
-      const options = { headers: { Authorization: USER_ID } };
+      const options = { headers: { Authorization: userId } };
 
       console.log("fetching ", url, " with opts ", options);
 
-      return fetch(url, options).then((response) => response.json());
+      return fetch(url, options).then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("user does not exist!");
+      });
     },
   });
 
