@@ -15,9 +15,11 @@ const TRANSACTIONS_ENDPOINT = "/transactions";
 const PERSONS_ENDPOINT = "/persons";
 const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 
+const USER_ID = "1";
+
 const QueriesProduction = (eventSlug: string): QueriesSpec => {
   const baseUrl = `${apiHost}${apiBase}/events/${eventSlug}`;
-  const authHeader = { Authorization: "2" };
+  const authHeader = { Authorization: USER_ID };
   return {
     createEvent: (e: Event) => {
       const url = `${apiHost}${apiBase}/events`;
@@ -165,7 +167,7 @@ export const useFSUser = () => {
     queryKey: ["userData"],
     queryFn: () => {
       const url = `${apiHost}${apiBase}/user`;
-      const options = { headers: { Authorization: "1" } };
+      const options = { headers: { Authorization: USER_ID } };
 
       console.log("fetching ", url, " with opts ", options);
 
