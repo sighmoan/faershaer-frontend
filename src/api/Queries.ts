@@ -16,10 +16,12 @@ const REIMBURSEMENT_ENDPOINT = "/reimbursements";
 
 const QueriesProduction = (eventSlug: string): QueriesSpec => {
   const baseUrl = `${apiHost}${apiBase}/events/${eventSlug}`;
+  const authHeader = { Authorization: "2" };
   return {
     createEvent: (e: Event) => {
       const url = `${apiHost}${apiBase}/events`;
       const options = {
+        ...authHeader,
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: e.label,
@@ -37,19 +39,27 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
     getEventSlug: () => eventSlug,
     getEvents: () => {
       const url = `${apiHost}${apiBase}/events`;
-      return fetch(url).then((response) => response.json());
+      const options = { headers: { ...authHeader } };
+
+      return fetch(url, options).then((response) => response.json());
     },
     getEventDetails: () => {
       const url = `${baseUrl}`;
-      return fetch(url).then((response) => response.json());
+      const options = { headers: { ...authHeader } };
+
+      return fetch(url, options).then((response) => response.json());
     },
     getEventDetailsFor: (id: string) => {
       const url = `${apiHost}${apiBase}/events/${id}`;
-      return fetch(url).then((response) => response.json());
+      const options = { headers: { ...authHeader } };
+
+      return fetch(url, options).then((response) => response.json());
     },
     getTransactions: () => {
       const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}`;
-      return fetch(url)
+      const options = { headers: { ...authHeader } };
+
+      return fetch(url, options)
         .then((response) => response.json())
         .then((data) => {
           return data.map((t: Transaction & { id: string }) => {
@@ -60,6 +70,7 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
     createTransaction: (t) => {
       const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}`;
       const options = {
+        ...authHeader,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -71,17 +82,21 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
     deleteTransaction: (txId: string) => {
       const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}/${txId}`;
       const options = {
+        ...authHeader,
         method: "DELETE",
       };
       return fetch(url, options).then(() => Promise.resolve());
     },
     getPersons: () => {
       const url = `${baseUrl}${PERSONS_ENDPOINT}`;
-      return fetch(url).then((response) => response.json());
+      const options = { headers: { ...authHeader } };
+
+      return fetch(url, options).then((response) => response.json());
     },
     createPerson: (p) => {
       const url = `${baseUrl}${PERSONS_ENDPOINT}`;
       const options = {
+        ...authHeader,
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -93,13 +108,16 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
     removePerson: (id: string) => {
       const url = `${baseUrl}${PERSONS_ENDPOINT}/${id}`;
       const options = {
+        ...authHeader,
         method: "DELETE",
       };
       return fetch(url, options).then(() => Promise.resolve());
     },
     getReimbursements: () => {
       const url = `${baseUrl}${REIMBURSEMENT_ENDPOINT}`;
-      return fetch(url).then((response) => response.json());
+      const options = { headers: { ...authHeader } };
+
+      return fetch(url, options).then((response) => response.json());
     },
   };
 };
