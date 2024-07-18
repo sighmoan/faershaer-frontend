@@ -18,7 +18,7 @@ const TxList = () => {
 
   return (
     <section className="flex-1">
-      <table className="table">
+      <table className="table text-xl">
         <thead>
           <tr>
             <th>Payer</th>

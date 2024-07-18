@@ -7,6 +7,7 @@ export type Transaction = {
   txId?: string;
   payer?: string;
   payerId?: string;
+  portraitUrl?: string;
   expense: string;
   sum: number;
 };

@@ -12,12 +12,17 @@ const TxRow = (t: Transaction) => {
   });
   return (
     <tr>
-      <td>{t.payer}</td>
+      <td className="flex content-center">
+        <div className="w-14 mask mask-squircle ">
+          <img src={t.portraitUrl} />
+        </div>
+        <p className="ml-3 content-center">{t.payer}</p>
+      </td>
       <td>{t.expense}</td>
       <td>{t.sum}kr</td>
       <td>
         <button className="btn" onClick={() => deleteTx.mutate()}>
-          X
+          delete
         </button>
       </td>
     </tr>
