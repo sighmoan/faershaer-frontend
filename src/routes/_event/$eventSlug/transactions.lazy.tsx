@@ -5,7 +5,7 @@ import AddTxForm from "../../../AddTxForm";
 export const Route = createLazyFileRoute("/_event/$eventSlug/transactions")({
   component: () => (
     <>
-      <main className="mx-auto max-w-xl">
+      <main className="mx-auto px-40 flex">
         <TxList></TxList>
         <AddTxForm />
       </main>

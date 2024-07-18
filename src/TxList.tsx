@@ -17,7 +17,7 @@ const TxList = () => {
   const tx: Transaction[] = data!;
 
   return (
-    <section>
+    <section className="flex-1">
       <table className="table">
         <thead>
           <tr>

@@ -35,7 +35,7 @@ const AddPersonForm = () => {
   };
 
   return (
-    <>
+    <div className="ml-8">
       <Heading>Add someone who wants to contribute</Heading>
       <form
         onChange={validate}
@@ -51,7 +51,7 @@ const AddPersonForm = () => {
         />
         <SubmitButton isPending={addPerson.isPending} isValid={isValid} />
       </form>
-    </>
+    </div>
   );
 };
 

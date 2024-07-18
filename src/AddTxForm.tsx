@@ -47,7 +47,7 @@ const AddTxForm = () => {
   if (error) return "Error loading persons!";
 
   return (
-    <>
+    <div className="ml-20">
       <h4 className="font-bold text-lg text-center mt-20">Add a transaction</h4>
       <form
         onSubmit={handleSubmit}
@@ -81,7 +81,7 @@ const AddTxForm = () => {
         />
         <SubmitButton isPending={addTx.isPending} isValid={valid} />
       </form>
-    </>
+    </div>
   );
 };
 
