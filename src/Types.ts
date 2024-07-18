@@ -21,6 +21,8 @@ export type Person = {
 
 export type Reimbursement = {
   debtor: string;
+  debtorPortraitUrl?: string;
   creditor: string;
+  creditorPortraitUrl?: string;
   amount: number;
 };
