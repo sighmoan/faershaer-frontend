@@ -40,7 +40,7 @@ const AddPersonForm = () => {
       <form
         onChange={validate}
         onSubmit={handleSubmit}
-        className="form-control flex-auto gap-2 my-10"
+        className="form-control max-w-lg mx-auto flex-auto gap-2 my-10"
       >
         <label htmlFor="name">Name</label>
         <input

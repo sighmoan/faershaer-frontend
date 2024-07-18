@@ -14,6 +14,7 @@ export type Transaction = {
 export type Person = {
   id?: string;
   name: string;
+  portraitUrl?: string;
   balance: number;
 };
 

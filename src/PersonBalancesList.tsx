@@ -17,7 +17,7 @@ const PersonBalancesList = () => {
   const persons: Person[] = data;
 
   return (
-    <section className="flex gap-3 place-content-center">
+    <section className="flex flex-wrap gap-3 place-content-center">
       {persons.length == 0 && (
         <p className="text-center italic">
           Who is going to split the bill?

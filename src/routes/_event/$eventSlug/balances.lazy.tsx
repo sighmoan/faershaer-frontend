@@ -5,7 +5,7 @@ import AddPersonForm from "../../../AddPersonForm";
 export const Route = createLazyFileRoute("/_event/$eventSlug/balances")({
   component: () => (
     <>
-      <main className="mx-auto max-w-xl">
+      <main className="mx-auto px-40">
         <PersonBalancesList />
         <AddPersonForm />
       </main>

@@ -15,11 +15,27 @@ const PersonBalance = (p: Person) => {
   });
 
   return (
-    <div className="card bg-primary text-primary-content">
+    <div className="card shadow-xl card-bordered max-w-xs">
+      <figure>
+        <img src={p.portraitUrl} />
+      </figure>
       <div className="card-body">
-        <button onClick={() => removePerson.mutate()}>x</button>
         <h3 className="card-title">{p.name}</h3>
-        <h4>{p.balance}</h4>
+        {p.balance == 0 ? (
+          <>
+            <p>has not paid for anything yet.</p>
+          </>
+        ) : (
+          <>
+            <p>has contributed</p>
+            <h4 className="italic text-center mt-10 font-black text-2xl">
+              {p.balance}kr
+            </h4>
+          </>
+        )}
+        <button onClick={() => removePerson.mutate()}>
+          <small>remove</small>
+        </button>
       </div>
     </div>
   );
