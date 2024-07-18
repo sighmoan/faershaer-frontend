@@ -18,6 +18,13 @@ const PersonBalancesList = () => {
 
   return (
     <section className="flex gap-3 place-content-center">
+      {persons.length == 0 && (
+        <p className="text-center italic">
+          Who is going to split the bill?
+          <br />
+          Let's add all the people who are coming.
+        </p>
+      )}
       {persons.map((p) => (
         <PersonBalance key={p.id} {...p} />
       ))}
