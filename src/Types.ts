@@ -26,3 +26,9 @@ export type Reimbursement = {
   creditorPortraitUrl?: string;
   amount: number;
 };
+
+export type User = {
+  id?: string;
+  name: string;
+  portraitUrl: string;
+};

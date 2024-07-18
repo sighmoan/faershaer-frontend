@@ -13,4 +13,5 @@ export type QueriesSpec = {
   createPerson: (p: Person) => Promise<void>;
   removePerson: (id: string) => Promise<void>;
   getReimbursements: () => Promise<Reimbursement[]>;
+  getUserData: () => Promise<User>;
 };

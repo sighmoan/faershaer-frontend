@@ -3,6 +3,7 @@ import QueriesDev from "./DevelopmentQueries";
 import { QueriesSpec } from "./QueriesSpec";
 import { useParams } from "@tanstack/react-router";
 import { Event } from "../Types";
+import { useQuery } from "@tanstack/react-query";
 
 const apiHost = import.meta.env.VITE_API_HOST;
 if (!apiHost) {
@@ -119,6 +120,12 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
 
       return fetch(url, options).then((response) => response.json());
     },
+    getUserData: () => {
+      const url = `${baseUrl}/user`;
+      const options = { headers: { ...authHeader } };
+
+      return fetch(url, options).then((response) => response.json());
+    },
   };
 };
 
@@ -154,10 +161,17 @@ export const UseFSQueriesFor = (eventId: string) => {
 };
 
 export const useFSUser = () => {
-  return {
-    userId: "1",
-    userName: "Simon",
-    portraitUrl:
-      "https://otlibrary.com/wp-content/gallery/bearded-seals/Spitzbergen_Bearded_seal_waving.jpg",
-  };
+  const userQuery = useQuery({
+    queryKey: ["userData"],
+    queryFn: () => {
+      const url = `${apiHost}${apiBase}/user`;
+      const options = { headers: { Authorization: "1" } };
+
+      console.log("fetching ", url, " with opts ", options);
+
+      return fetch(url, options).then((response) => response.json());
+    },
+  });
+
+  return userQuery;
 };
