@@ -17,15 +17,15 @@ const EventsList = () => {
   return (
     <>
       <h4 className="font-bold text-lg text-center mt-20">Your Events</h4>
-      <div className="flex justify-center">
+      <div className="flex flex-wrap justify-evenly">
+        {data?.map((event: Event) => <EventCard key={event.id} {...event} />)}
+      </div>
+      <div className="flex justify-center mt-24">
         <Link to="/create-event">
           <button className="btn bg-primary text-white">
             Create New Event
           </button>
         </Link>
-      </div>
-      <div className="flex flex-wrap justify-evenly">
-        {data?.map((event: Event) => <EventCard key={event.id} {...event} />)}
       </div>
     </>
   );
