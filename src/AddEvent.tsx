@@ -15,7 +15,7 @@ const AddEvent = () => {
     mutationFn: Queries.createEvent,
     onSuccess: (variables) => {
       console.log("variables is", variables);
-      navigate({ to: `/${variables}/transactions` });
+      navigate({ to: `/${variables}/balances` });
     },
   });
 
@@ -32,14 +32,23 @@ const AddEvent = () => {
     const currentForm = e.currentTarget;
     console.log("e is ", e);
     addEvent.mutate(ev);
-    //addEvent.mutateAsync(ev).then(() => currentForm.reset());
   };
 
   return (
     <>
       <Heading>Create a new event</Heading>
-      <form onChange={validate} onSubmit={handleSubmit} className="formControl">
-        <input type="text" name="label" className="input input-bordered" />
+      <form
+        onChange={validate}
+        onSubmit={handleSubmit}
+        className="form-control"
+      >
+        <label htmlFor="label">Event</label>
+        <input
+          type="text"
+          name="label"
+          className="input input-bordered mb-10"
+          placeholder="What's the occasion?"
+        />
         <SubmitButton isValid={isValid} isPending={addEvent.isPending} />
       </form>
     </>
