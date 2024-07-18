@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router";
 import { UseFSQueriesFor } from "./api/Queries";
 import { useQuery } from "@tanstack/react-query";
 import { Event } from "./Types";
+import { Spinner } from "./components/Spinner";
 
 const EventCard = (event: Event) => {
   const Queries = UseFSQueriesFor(event.id);
@@ -11,7 +12,7 @@ const EventCard = (event: Event) => {
     queryFn: Queries.getPersons,
   });
 
-  if (isPending) return "Loading . . .";
+  if (isPending) return <Spinner />;
   if (error) return "Error!";
 
   const totalPeopleCount = data.length;

@@ -3,6 +3,7 @@ import { Reimbursement } from "./Types";
 import { useQuery } from "@tanstack/react-query";
 import { UseFSQueries } from "./api/Queries";
 import { Heading } from "./components/Heading";
+import { Spinner } from "./components/Spinner";
 
 const ReimbursementBoxList = () => {
   const Queries = UseFSQueries();
@@ -12,7 +13,12 @@ const ReimbursementBoxList = () => {
     queryFn: Queries.getReimbursements,
   });
 
-  if (isPending) return "Loading reimbursements . . . ";
+  if (isPending)
+    return (
+      <section className="flex justify-center content-center">
+        <Spinner />;
+      </section>
+    );
   if (error) return "Error loading reimbursements!";
 
   const rbs: Reimbursement[] = [];

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import TxRow from "./TxRow.tsx";
 import { Transaction } from "./Types.ts";
 import { UseFSQueries } from "./api/Queries.ts";
+import { Spinner } from "./components/Spinner.tsx";
 
 const TxList = () => {
   const Queries = UseFSQueries();
@@ -11,7 +12,6 @@ const TxList = () => {
     queryFn: Queries.getTransactions,
   });
 
-  if (isPending) return "Loading . . .";
   if (error) return "Error!";
 
   const tx: Transaction[] = data!;
@@ -27,7 +27,8 @@ const TxList = () => {
           </tr>
         </thead>
         <tbody>
-          {tx.length == 0 && (
+          {isPending && <Spinner />}
+          {!isPending && tx.length == 0 && (
             <td colSpan={3}>
               <p className="text-center italic">
                 There are no recorded transactions!
@@ -37,9 +38,7 @@ const TxList = () => {
               </p>
             </td>
           )}
-          {tx.map((t) => (
-            <TxRow key={t.txId} {...t}></TxRow>
-          ))}
+          {!isPending && tx.map((t) => <TxRow key={t.txId} {...t}></TxRow>)}
         </tbody>
       </table>
     </section>

@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { UseFSQueries } from "./api/Queries";
 import PersonBalance from "./PersonBalance";
 import { Person } from "./Types";
+import { Spinner } from "./components/Spinner";
 
 const PersonBalancesList = () => {
   const Queries = UseFSQueries();
@@ -11,7 +12,12 @@ const PersonBalancesList = () => {
     queryFn: Queries.getPersons,
   });
 
-  if (isPending) return "Loading . . .";
+  if (isPending)
+    return (
+      <section className="flex justify-center content-center">
+        <Spinner />;
+      </section>
+    );
   if (error) return "Error!";
 
   const persons: Person[] = data;

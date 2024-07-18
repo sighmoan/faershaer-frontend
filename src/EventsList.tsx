@@ -11,7 +11,13 @@ const EventsList = () => {
     queryFn: Queries.getEvents,
   });
 
-  if (isPending) return "Loading . . .";
+  if (isPending) {
+    return (
+      <>
+        <span className="loading loading-ring loading-lg"></span>
+      </>
+    );
+  }
   if (error) return "Error loading events list!";
 
   return (
