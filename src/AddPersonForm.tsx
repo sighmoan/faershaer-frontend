@@ -3,6 +3,7 @@ import { UseFSQueries } from "./api/Queries";
 import { Person } from "./Types";
 import { useState } from "react";
 import SubmitButton from "./components/SubmitButton";
+import { Heading } from "./components/Heading";
 
 const AddPersonForm = () => {
   const Queries = UseFSQueries();
@@ -35,9 +36,7 @@ const AddPersonForm = () => {
 
   return (
     <>
-      <h4 className="font-bold text-lg text-center mt-20">
-        Add someone who wants to contribute
-      </h4>
+      <Heading>Add someone who wants to contribute</Heading>
       <form
         onChange={validate}
         onSubmit={handleSubmit}
