@@ -34,7 +34,7 @@ const TxList = () => {
                 There are no recorded transactions!
                 <br />
                 To start splitting expenses, add some things that people have
-                paid for, using the form below.
+                paid for.
               </p>
             </td>
           )}
