@@ -4,9 +4,10 @@ import { Person } from "./Types";
 import { useState } from "react";
 import SubmitButton from "./components/SubmitButton";
 import { Heading } from "./components/Heading";
+import { FullQueriesSpec } from "./api/QueriesSpec";
 
 const AddPersonForm = () => {
-  const Queries = UseFSQueries();
+  const Queries = UseFSQueries() as FullQueriesSpec;
 
   const client = useQueryClient();
   const [isValid, setValid] = useState(false);

@@ -149,7 +149,7 @@ export const UseFSQueries = (): LimitedQueriesSpec | FullQueriesSpec => {
 
   console.log("the event ID is ", eventId);
 
-  let Queries = QueriesDev;
+  let Queries: QueriesSpec = QueriesDev;
   if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
     Queries = QueriesProduction(eventId);
   }
@@ -172,7 +172,7 @@ export const UseFSQueries = (): LimitedQueriesSpec | FullQueriesSpec => {
 
 export const UseFSQueriesFor = (eventId: string) => {
   const eventSlug = eventId;
-  let Queries = QueriesDev;
+  let Queries: QueriesSpec = QueriesDev;
   if (import.meta.env.PROD || import.meta.env.VITE_PROD_API) {
     Queries = QueriesProduction(eventSlug);
   }

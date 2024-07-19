@@ -3,9 +3,10 @@ import { UseFSQueries } from "./api/Queries";
 import PersonBalance from "./PersonBalance";
 import { Person } from "./Types";
 import { Spinner } from "./components/Spinner";
+import { FullQueriesSpec } from "./api/QueriesSpec";
 
 const PersonBalancesList = () => {
-  const Queries = UseFSQueries();
+  const Queries = UseFSQueries() as FullQueriesSpec;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["personData", "txData"],

@@ -2,9 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Transaction } from "./Types";
 import { UseFSQueries } from "./api/Queries";
 import { PlaceholderAvatar } from "./components/PlaceholderAvatar";
+import { FullQueriesSpec } from "./api/QueriesSpec";
 
 const TxRow = (t: Transaction) => {
-  const Queries = UseFSQueries();
+  const Queries = UseFSQueries() as FullQueriesSpec;
 
   const client = useQueryClient();
   const deleteTx = useMutation({
@@ -22,7 +23,7 @@ const TxRow = (t: Transaction) => {
           <div className="avatar placeholder">
             <div className="w-14 bg-neutral mask mask-squircle  justify-center ">
               <span className="text-neutral-content text-center">
-                <PlaceholderAvatar personName={t.payer} />
+                <PlaceholderAvatar personName={t.payer!} />
               </span>
             </div>
           </div>

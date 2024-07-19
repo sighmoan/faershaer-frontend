@@ -4,9 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import { UseFSQueries } from "./api/Queries";
 import { Heading } from "./components/Heading";
 import { Spinner } from "./components/Spinner";
+import { FullQueriesSpec } from "./api/QueriesSpec";
 
 const ReimbursementBoxList = () => {
-  const Queries = UseFSQueries();
+  const Queries = UseFSQueries() as FullQueriesSpec;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["reimbursementData"],

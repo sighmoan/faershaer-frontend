@@ -3,9 +3,10 @@ import TxRow from "./TxRow.tsx";
 import { Transaction } from "./Types.ts";
 import { UseFSQueries } from "./api/Queries.ts";
 import { Spinner } from "./components/Spinner.tsx";
+import { FullQueriesSpec } from "./api/QueriesSpec.ts";
 
 const TxList = () => {
-  const Queries = UseFSQueries();
+  const Queries = UseFSQueries() as FullQueriesSpec;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["txData"],

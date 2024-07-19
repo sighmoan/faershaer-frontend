@@ -21,13 +21,11 @@ const LogoStrip = () => {
       <SignedIn>
         {user.data && (
           <>
-            <div className="flex align-center">
-              <p className="align-center self-center">
-                Hey <strong>{user.data.name}</strong>!
-              </p>
+            <div className="flex flex-col">
               <div className="avatar mask mask-squircle h-14">
                 <img src={user.data.portraitUrl} />
               </div>
+              <p className="text-center">{user.data.name}</p>
             </div>
             <SignOutButton></SignOutButton>
           </>

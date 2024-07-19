@@ -1,7 +1,3 @@
 export const Footer = () => {
-  return (
-    <div className="bg-primary mt-96 absolute inset-x-0 end-0 w-full">
-      <p className="text-primary text-center">faershaer</p>
-    </div>
-  );
+  return <div className="mt-96 sticky inset-x-0 bottom-0 w-full"></div>;
 };

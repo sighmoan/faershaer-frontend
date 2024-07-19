@@ -3,9 +3,10 @@ import { UseFSQueriesFor } from "./api/Queries";
 import { useQuery } from "@tanstack/react-query";
 import { Event } from "./Types";
 import { Spinner } from "./components/Spinner";
+import { FullQueriesSpec } from "./api/QueriesSpec";
 
 const EventCard = (event: Event) => {
-  const Queries = UseFSQueriesFor(event.id);
+  const Queries = UseFSQueriesFor(event.id!) as FullQueriesSpec;
 
   const { isPending, error, data } = useQuery({
     queryKey: ["eventsCardData", { id: event.id }],
@@ -15,7 +16,7 @@ const EventCard = (event: Event) => {
   if (isPending) return <Spinner />;
   if (error) return "Error!";
 
-  const totalPeopleCount = data.length;
+  const totalPeopleCount = data ? data.length : 0;
 
   return (
     <Link to={`${event.id}/transactions`}>
@@ -29,12 +30,13 @@ const EventCard = (event: Event) => {
             {totalPeopleCount <= 1 && (
               <span className="italic text-lightgrey">just you</span>
             )}
-            {data.slice(0, 5).map((person, index) => {
-              if (index == 4 && totalPeopleCount > 5)
-                return `and ${totalPeopleCount - 4} others`;
-              if (index == totalPeopleCount - 1) return `and ${person.name}`;
-              return `${person.name}, `;
-            })}
+            {totalPeopleCount > 1 &&
+              data.slice(0, 5).map((person, index) => {
+                if (index == 4 && totalPeopleCount > 5)
+                  return `and ${totalPeopleCount - 4} others`;
+                if (index == totalPeopleCount - 1) return `and ${person.name}`;
+                return `${person.name}, `;
+              })}
           </p>
         </div>
       </div>

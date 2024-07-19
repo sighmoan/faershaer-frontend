@@ -29,7 +29,6 @@ const AddEvent = () => {
     const ev: Event = {
       label: e.currentTarget.label.value,
     };
-    const currentForm = e.currentTarget;
     console.log("e is ", e);
     addEvent.mutate(ev);
   };

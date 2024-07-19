@@ -3,9 +3,10 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Person, Transaction } from "./Types";
 import { useState } from "react";
 import SubmitButton from "./components/SubmitButton";
+import { FullQueriesSpec } from "./api/QueriesSpec";
 
 const AddTxForm = () => {
-  const Queries = UseFSQueries();
+  const Queries = UseFSQueries() as FullQueriesSpec;
 
   const [valid, setValid] = useState(false);
 

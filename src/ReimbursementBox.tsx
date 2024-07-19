@@ -1,6 +1,5 @@
 import { Reimbursement } from "./Types";
 import { PlaceholderAvatar } from "./components/PlaceholderAvatar";
-import { Person } from "./Types";
 
 const AvatarBox = ({
   perName,

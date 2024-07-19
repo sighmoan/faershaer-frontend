@@ -2,9 +2,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Person } from "./Types";
 import { UseFSQueries } from "./api/Queries";
 import { PlaceholderAvatar } from "./components/PlaceholderAvatar";
+import { FullQueriesSpec } from "./api/QueriesSpec";
 
 const PersonBalance = (p: Person) => {
-  const Queries = UseFSQueries();
+  const Queries = UseFSQueries() as FullQueriesSpec;
   const queryClient = useQueryClient();
 
   const removePerson = useMutation({

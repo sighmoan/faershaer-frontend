@@ -1,4 +1,4 @@
-import { QueriesSpec } from "./QueriesSpec";
+import { FullQueriesSpec } from "./QueriesSpec";
 import { Event, Person, Reimbursement, Transaction } from "../Types";
 
 const devApiDelay = import.meta.env.VITE_DEV_API_DELAY ?? 0;
@@ -71,7 +71,8 @@ const refreshBalances = () => {
   });
 };
 
-const QueriesDev: QueriesSpec = {
+const QueriesDev: FullQueriesSpec = {
+  getUserData: () => Promise.reject(),
   createEvent: (e: Event) => {
     console.log("yooooo");
     return new Promise((resolve) => {
@@ -81,7 +82,7 @@ const QueriesDev: QueriesSpec = {
         e.id = String(++maxEventId);
         console.log("Adding ", e);
         events.push(e);
-        resolve(e);
+        resolve(e.id);
       }, devApiDelay);
     });
   },
