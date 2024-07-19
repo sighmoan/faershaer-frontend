@@ -3,7 +3,7 @@ import QueriesDev from "./DevelopmentQueries";
 import { QueriesSpec } from "./QueriesSpec";
 import { useParams } from "@tanstack/react-router";
 import { Event } from "../Types";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useUser } from "@clerk/clerk-react";
 
 const apiHost = import.meta.env.VITE_API_HOST;
@@ -167,16 +167,25 @@ export const UseFSQueriesFor = (eventId: string) => {
 export const useFSUser = () => {
   const user = useUser();
 
-  if (!user.isLoaded) {
-    console.log("user is not loaded");
-    return { isPending: true };
-  }
-  if (user.isLoaded && !user.isSignedIn) {
-    console.log("user is loaded, not signed in");
-    return { isPending: false, error: null, data: undefined };
-  }
-
-  const userId = user.user.id;
+  const createUser = useMutation({
+    mutationFn: () => {
+      const url = `${apiHost}${apiBase}/user`;
+      const options = {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          id: user.user.id,
+          name: user.user.firstName,
+          portraitUrl: user.user.imageUrl,
+        }),
+      };
+      console.log(options);
+      return fetch(url, options).then((response) => {
+        if (response.ok) return response.json();
+        throw new Error("sign up failed");
+      });
+    },
+  });
 
   const userQuery = useQuery({
     queryKey: ["userData"],
@@ -190,10 +199,21 @@ export const useFSUser = () => {
         if (response.ok) {
           return response.json();
         }
-        throw new Error("user does not exist!");
+        return createUser.mutateAsync();
       });
     },
   });
+
+  if (!user.isLoaded) {
+    console.log("user is not loaded");
+    return { isPending: true };
+  }
+  if (user.isLoaded && !user.isSignedIn) {
+    console.log("user is loaded, not signed in");
+    return { isPending: false, error: null, data: undefined };
+  }
+
+  const userId = user.user.id;
 
   return userQuery;
 };
