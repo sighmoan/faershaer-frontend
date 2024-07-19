@@ -1,6 +1,10 @@
 import { Transaction } from "../Types";
 import QueriesDev from "./DevelopmentQueries";
-import { QueriesSpec } from "./QueriesSpec";
+import {
+  FullQueriesSpec,
+  LimitedQueriesSpec,
+  QueriesSpec,
+} from "./QueriesSpec";
 import { useParams } from "@tanstack/react-router";
 import { Event } from "../Types";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -20,14 +24,18 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
   const User = useUser();
   const baseUrl = `${apiHost}${apiBase}/events/${eventSlug}`;
   console.log("Generating queries. Is the user signed in? ", User.isSignedIn);
-  const authHeader = User.isSignedIn ? { Authorization: User.user.id } : {};
-  console.log("Hence, the auth header is ", authHeader);
+  const userId = User.user ? User.user.id : "";
+  const defaultHeaders: Headers = new Headers();
+  defaultHeaders.append("Authorization", userId);
+
+  console.log("Hence, the auth header is ", defaultHeaders);
   return {
     createEvent: (e: Event) => {
       const url = `${apiHost}${apiBase}/events`;
+      const headers = new Headers(defaultHeaders);
       const options = {
         method: "POST",
-        headers: { ...authHeader, "Content-Type": "application/json" },
+        headers: headers,
         body: e.label,
       };
 
@@ -35,6 +43,8 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
         console.log("and the response is");
         console.log(response);
         const location = response.headers.get("Location");
+        if (!location)
+          throw new Error("Server error: no location for event returned.");
         console.log("Location is", location);
         const eventId = location.split("/")[2];
         console.log("meaning ID is ", eventId);
@@ -44,25 +54,25 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
     getEventSlug: () => eventSlug,
     getEvents: () => {
       const url = `${apiHost}${apiBase}/events`;
-      const options = { headers: { ...authHeader } };
+      const options = { headers: defaultHeaders };
 
       return fetch(url, options).then((response) => response.json());
     },
     getEventDetails: () => {
       const url = `${baseUrl}`;
-      const options = { headers: { ...authHeader } };
+      const options = { headers: defaultHeaders };
 
       return fetch(url, options).then((response) => response.json());
     },
     getEventDetailsFor: (id: string) => {
       const url = `${apiHost}${apiBase}/events/${id}`;
-      const options = { headers: { ...authHeader } };
+      const options = { headers: defaultHeaders };
 
       return fetch(url, options).then((response) => response.json());
     },
     getTransactions: () => {
       const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}`;
-      const options = { headers: { ...authHeader } };
+      const options = { headers: defaultHeaders };
 
       return fetch(url, options)
         .then((response) => response.json())
@@ -74,38 +84,38 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
     },
     createTransaction: (t) => {
       const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}`;
+      const headers = new Headers(defaultHeaders);
+      headers.append("Content-Type", "application/json");
       const options = {
-        ...authHeader,
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         body: JSON.stringify(t),
       };
       return fetch(url, options).then(() => Promise.resolve());
     },
     deleteTransaction: (txId: string) => {
       const url = `${baseUrl}${TRANSACTIONS_ENDPOINT}/${txId}`;
+      const headers = new Headers(defaultHeaders);
+      headers.append("Content-Type", "application/json");
       const options = {
-        ...authHeader,
+        headers: headers,
         method: "DELETE",
       };
       return fetch(url, options).then(() => Promise.resolve());
     },
     getPersons: () => {
       const url = `${baseUrl}${PERSONS_ENDPOINT}`;
-      const options = { headers: { ...authHeader } };
+      const options = { headers: defaultHeaders };
 
       return fetch(url, options).then((response) => response.json());
     },
     createPerson: (p) => {
       const url = `${baseUrl}${PERSONS_ENDPOINT}`;
+      const headers = new Headers(defaultHeaders);
+      headers.append("Content-Type", "application/json");
       const options = {
-        ...authHeader,
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: headers,
         body: p.name,
       };
       return fetch(url, options).then(() => Promise.resolve());
@@ -113,27 +123,27 @@ const QueriesProduction = (eventSlug: string): QueriesSpec => {
     removePerson: (id: string) => {
       const url = `${baseUrl}${PERSONS_ENDPOINT}/${id}`;
       const options = {
-        ...authHeader,
+        headers: defaultHeaders,
         method: "DELETE",
       };
       return fetch(url, options).then(() => Promise.resolve());
     },
     getReimbursements: () => {
       const url = `${baseUrl}${REIMBURSEMENT_ENDPOINT}`;
-      const options = { headers: { ...authHeader } };
+      const options = { headers: defaultHeaders };
 
       return fetch(url, options).then((response) => response.json());
     },
     getUserData: () => {
       const url = `${baseUrl}/user`;
-      const options = { headers: { ...authHeader } };
+      const options = { headers: defaultHeaders };
 
       return fetch(url, options).then((response) => response.json());
     },
   };
 };
 
-export const UseFSQueries = () => {
+export const UseFSQueries = (): LimitedQueriesSpec | FullQueriesSpec => {
   const { eventSlug } = useParams({ strict: false });
   const eventId = eventSlug ?? "-1";
 
@@ -148,7 +158,12 @@ export const UseFSQueries = () => {
     console.log(
       "No event ID available, only a subset of FS queries available."
     );
-    return { createEvent: Queries.createEvent, getEvents: Queries.getEvents };
+    return {
+      createEvent: Queries.createEvent,
+      getEvents: Queries.getEvents,
+      getUserData: Queries.getUserData,
+      getEventDetailsFor: Queries.getEventDetailsFor,
+    };
   }
 
   console.log("Queries are ", Queries);
@@ -174,9 +189,9 @@ export const useFSUser = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          id: user.user.id,
-          name: user.user.firstName,
-          portraitUrl: user.user.imageUrl,
+          id: user.user!.id,
+          name: user.user!.firstName,
+          portraitUrl: user.user!.imageUrl,
         }),
       };
       console.log(options);
